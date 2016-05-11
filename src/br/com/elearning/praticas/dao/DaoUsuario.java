@@ -5,7 +5,6 @@
  */
 package br.com.elearning.praticas.dao;
 
-import br.com.elearning.praticas.util.Conexao;
 import br.com.elearning.praticas.interfaces.IUsuarioDao;
 import br.com.elearning.praticas.model.Usuario;
 import br.com.elearning.praticas.util.PropertiesUtils;
@@ -92,7 +91,7 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                if (rs.getString("nick").equalsIgnoreCase(nick) && rs.getString("senha").equalsIgnoreCase(senha)) {
+                if (rs.getString("nick").equals(nick) && rs.getString("senha").equals(senha)) {
                     Usuario user = new Usuario();
                     user.setId(rs.getInt("id"));
                     user.setNome(rs.getString("nome"));

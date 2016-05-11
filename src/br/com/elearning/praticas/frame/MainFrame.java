@@ -1,5 +1,6 @@
 package br.com.elearning.praticas.frame;
 
+import br.com.elearning.praticas.dialog.CadastrarUser;
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
 import java.awt.Color;
@@ -28,22 +29,24 @@ import javax.swing.UIManager;
 public class MainFrame extends JFrame {
 
     private JPanel contentPane;
-    private JPanel panelInicio;
+    private JPanel panelJogador;
+    private JPanel panelAdmin;
     private JPanel panelLogin;
     private JLabel lblLogin;
     private JLabel lblSenha;
     private JLabel lblCadastrarse;
     private JTextField tfLogin;
-    private JPanel paneImg;
+    private JPanel panelImg;
     private JButton btnEntrar;
     private JPasswordField tfSenha;
     private JMenuItem mntmIniciarSimulado;
     private JMenuItem mntmEditarConta;
     private JMenuItem mntmVisualizarHistorico;
     private JMenuItem mntmSair;
-    private JSeparator separator;
-    private JSeparator separator_1;
+    private JSeparator sep;
+    private JSeparator sep1;
     private JMenuBar menuBar;
+    private JMenuBar menuBarAdmin;
     private JMenu mnNomeUser;
     private Facade facade;
 
@@ -68,7 +71,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        facade = new Facade();
+        this.facade = new Facade();
 
         menuBar = new JMenuBar();
         menuBar.setVisible(false);
@@ -77,26 +80,36 @@ public class MainFrame extends JFrame {
         mnNomeUser = new JMenu("");
         menuBar.add(mnNomeUser);
 
-        mntmIniciarSimulado = new JMenuItem("INICIAR SIMULADO");
+        mntmIniciarSimulado = new JMenuItem();
+        mntmIniciarSimulado.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                filtrarTipo();
+            }
+        });
         mnNomeUser.add(mntmIniciarSimulado);
 
-        separator = new JSeparator();
-        mnNomeUser.add(separator);
+        sep = new JSeparator();
+        mnNomeUser.add(sep);
 
         mntmEditarConta = new JMenuItem("EDITAR CONTA");
         mnNomeUser.add(mntmEditarConta);
 
-        mntmVisualizarHistorico = new JMenuItem("VISUALIZAR HISTORICO");
+        mntmVisualizarHistorico = new JMenuItem("");
+        mntmVisualizarHistorico.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                filtrarTipo2();
+            }
+        });
         mnNomeUser.add(mntmVisualizarHistorico);
 
-        separator_1 = new JSeparator();
-        mnNomeUser.add(separator_1);
+        sep1 = new JSeparator();
+        mnNomeUser.add(sep1);
 
         mntmSair = new JMenuItem("SAIR");
         mntmSair.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuBar.setVisible(false);
-                panelInicio.setVisible(false);
+                panelJogador.setVisible(false);
                 panelLogin.setVisible(true);
             }
         });
@@ -129,11 +142,11 @@ public class MainFrame extends JFrame {
         panelLogin.add(tfLogin);
         tfLogin.setColumns(10);
 
-        paneImg = new JPanel();
-        paneImg.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+        panelImg = new JPanel();
+        panelImg.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
                 TitledBorder.TOP, null, null));
-        paneImg.setBounds(217, 11, 155, 198);
-        panelLogin.add(paneImg);
+        panelImg.setBounds(217, 11, 155, 198);
+        panelLogin.add(panelImg);
 
         btnEntrar = new JButton("ENTRAR");
         btnEntrar = new JButton("ENTRAR");
@@ -154,11 +167,25 @@ public class MainFrame extends JFrame {
                         JOptionPane.showMessageDialog(MainFrame.this, "LOGIN OU SENHA INVALIDOS!", "ERROR AO FAZER LOGIN", JOptionPane.WARNING_MESSAGE);
                     }
                     if (user != null) {
-                        menuBar.setVisible(true);
-                        panelLogin.setVisible(false);
-                        mnNomeUser.setText(user.getNome());
-                        tfLogin.setText("");
-                        tfSenha.setText("");
+                        if (user.getTipo().equalsIgnoreCase("j")) {
+                            menuBar.setVisible(true);
+                            mntmIniciarSimulado.setText("NOVO SIMULADO");
+                            mntmVisualizarHistorico.setText("VISUALIZAR HISTORICO");
+                            panelLogin.setVisible(false);
+                            mnNomeUser.setText(user.getNome() + " - Jogador");
+                            tfLogin.setText("");
+                            tfSenha.setText("");
+                        }
+                        if (user.getTipo().equalsIgnoreCase("a")) {
+                            menuBar.setVisible(true);
+                            mntmIniciarSimulado.setText("CADASTRAR PERGUNTA");
+                            mntmVisualizarHistorico.setText("VISUALIZAR JOGADORES");
+                            panelLogin.setVisible(false);
+                            mnNomeUser.setText(user.getNome() + " - Admin");
+                            tfLogin.setText("");
+                            tfSenha.setText("");
+                        }
+
                     }
                 }
             }
@@ -170,22 +197,46 @@ public class MainFrame extends JFrame {
         tfSenha.setBounds(66, 104, 136, 20);
         panelLogin.add(tfSenha);
 
-        panelInicio = new JPanel();
-        panelInicio.setBackground(Color.WHITE);
-        panelInicio.setBounds(0, 0, 944, 493);
-        contentPane.add(panelInicio);
-        panelInicio.setLayout(null);
+        panelJogador = new JPanel();
+        panelJogador.setBackground(Color.WHITE);
+        panelJogador.setBounds(0, 0, 944, 493);
+        contentPane.add(panelJogador);
+        panelJogador.setLayout(null);
+
+        panelAdmin = new JPanel();
+        panelAdmin.setBackground(Color.WHITE);
+        panelAdmin.setBounds(0, 0, 944, 493);
+        contentPane.add(panelAdmin);
+        panelAdmin.setLayout(null);
 
         lblCadastrarse = new JLabel("CADASTRAR-SE");
+        lblCadastrarse.setForeground(Color.BLUE);
+        lblCadastrarse.setBounds(75, 198, 77, 14);
+        panelLogin.add(lblCadastrarse);
         lblCadastrarse.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "CADASTRO DO JOGADOR AKI!!");
+                new CadastrarUser();
             }
         });
-        lblCadastrarse.setBounds(843, 468, 91, 14);
-        panelInicio.add(lblCadastrarse);
 
         setVisible(true);
+    }
+
+    public void filtrarTipo() {
+        if (mntmIniciarSimulado.getText().equals("CADASTRAR PERGUNTA")) {
+            JOptionPane.showMessageDialog(MainFrame.this, "DIALOG DE CADASTRAR PERGUNTA AKI");
+        }
+        if (mntmIniciarSimulado.getText().equals("NOVO SIMULADO")) {
+            JOptionPane.showMessageDialog(MainFrame.this, "DIALOG DE NOVO SIMULADO AKI");
+        }
+    }
+       public void filtrarTipo2() {
+        if (mntmVisualizarHistorico.getText().equals("VISUALIZAR HISTORICO")) {
+            JOptionPane.showMessageDialog(MainFrame.this, "VISUALIZAR APENAS O HISTORICO DO JOGADOR AKI");
+        }
+        if (mntmVisualizarHistorico.getText().equals("VISUALIZAR JOGADORES")) {
+            JOptionPane.showMessageDialog(MainFrame.this, "VISUALIZAR JOGADORES AKI");
+        }
     }
 }

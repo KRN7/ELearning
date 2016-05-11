@@ -15,6 +15,8 @@ import br.com.elearning.praticas.interfaces.IUsuarioDao;
 import br.com.elearning.praticas.interfaces.IPerguntaDao;
 import br.com.elearning.praticas.interfaces.IAlternativaDao;
 import br.com.elearning.praticas.interfaces.IAreaDao;
+import br.com.elearning.praticas.interfaces.ISimuladoDao;
+import br.com.elearning.praticas.model.Simulado;
 import br.com.elearning.praticas.util.DaoFactory;
 import java.io.Serializable;
 import java.util.List;
@@ -30,6 +32,7 @@ public class Facade implements Serializable {
     private IAreaDao daoArea;
     private IAlternativaDao daoAlternativa;
     private IHistoricoJogadorDao daoHistoricoJogador;
+    private ISimuladoDao daoSimulado;
 
     public Facade() {
         this.daoUsuario = DaoFactory.createUsuarioDao();
@@ -37,6 +40,7 @@ public class Facade implements Serializable {
         this.daoArea = DaoFactory.createAreaDao();
         this.daoAlternativa = DaoFactory.createAlternativaDao();
         this.daoHistoricoJogador = DaoFactory.createHistoricoDao();
+        this.daoSimulado = DaoFactory.createSimuladoDao();
     }
 
     //METODOS DO DAO USUARIO
@@ -127,4 +131,18 @@ public class Facade implements Serializable {
     public void salvarHistorico(HistoricoJogador h, Pergunta p, Usuario u) throws Exception {
         this.daoHistoricoJogador.salvarHistoricoJogador(h, p, u);
     }
+
+    //METODOS DO DAO SIMULADO
+    public void salvarSimulado(Simulado s) throws Exception {
+        this.daoSimulado.salvar(s);
+    }
+
+    public Simulado buscar(int ano) throws Exception {
+        return this.daoSimulado.buscar(ano);
+    }
+
+    public List<Simulado> listarSimulado() throws Exception {
+        return this.daoSimulado.listar();
+    }
+
 }

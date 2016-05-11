@@ -14,30 +14,37 @@ import br.com.elearning.praticas.dao.DaoPergunta;
 import br.com.elearning.praticas.dao.DaoAlternativa;
 import br.com.elearning.praticas.dao.DaoArea;
 import br.com.elearning.praticas.dao.DaoHistorico;
+import br.com.elearning.praticas.dao.DaoSimulado;
 import br.com.elearning.praticas.dao.DaoUsuario;
+import br.com.elearning.praticas.interfaces.ISimuladoDao;
 
 /**
  *
  * @author RicksonEllen
  */
 public class DaoFactory {
-    public static IUsuarioDao createUsuarioDao(){
+
+    public static IUsuarioDao createUsuarioDao() {
         return new DaoUsuario();
     }
-    
-    public static IPerguntaDao createPerguntaDao(){
+
+    public static IPerguntaDao createPerguntaDao() {
         return new DaoPergunta();
     }
-    
-    public static IAreaDao createAreaDao(){
+
+    public static IAreaDao createAreaDao() {
         return new DaoArea();
     }
-    
-    public static IAlternativaDao createAlternativaDao(){
+
+    public static IAlternativaDao createAlternativaDao() {
         return new DaoAlternativa();
     }
 
     public static IHistoricoJogadorDao createHistoricoDao() {
         return new DaoHistorico();
+    }
+
+    public static ISimuladoDao createSimuladoDao() {
+        return new DaoSimulado();
     }
 }
