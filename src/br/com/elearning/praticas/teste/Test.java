@@ -4,9 +4,11 @@ import br.com.elearning.praticas.model.Pergunta;
 import br.com.elearning.praticas.model.Usuario;
 import br.com.elearning.praticas.model.HistoricoJogador;
 import br.com.elearning.praticas.dao.DaoHistorico;
+import br.com.elearning.praticas.dao.DaoSimulado;
 import br.com.elearning.praticas.util.Conexao;
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Area;
+import br.com.elearning.praticas.model.Simulado;
 import br.com.elearning.praticas.util.PropertiesUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,11 @@ public class Test {
                 System.out.println("conexao falhou\n");
                 facade = new Facade();
             }
+            
+            Simulado s = new DaoSimulado().buscar(2014);
+            
+            System.out.println(s);
+            
         } catch (Exception ex) {
             ex.printStackTrace();
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);

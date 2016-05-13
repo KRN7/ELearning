@@ -15,7 +15,6 @@ public class Simulado {
 
     private long id;
     private int ano;
-    private List<Pergunta> perguntas;
 
     public Simulado() {
 
@@ -36,17 +35,9 @@ public class Simulado {
     public void setAno(int ano) {
         this.ano = ano;
     }
-
-    public List<Pergunta> getPerguntas() {
-        return perguntas;
-    }
-
-    public void setPerguntas(List<Pergunta> perguntas) {
-        this.perguntas = perguntas;
-    }
-
+    
     @Override
     public String toString() {
-        return "Simula: [ ano: " + this.ano + ", perguntas: " + this.perguntas + " ]\n";
+        return "Ano do Simulado: " + ano;
     }
 }

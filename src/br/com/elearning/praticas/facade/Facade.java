@@ -27,12 +27,12 @@ import java.util.List;
  */
 public class Facade implements Serializable {
 
-    private IUsuarioDao daoUsuario;
-    private IPerguntaDao daoPergunta;
-    private IAreaDao daoArea;
-    private IAlternativaDao daoAlternativa;
-    private IHistoricoJogadorDao daoHistoricoJogador;
-    private ISimuladoDao daoSimulado;
+    private final IUsuarioDao daoUsuario;
+    private final IPerguntaDao daoPergunta;
+    private final IAreaDao daoArea;
+    private final IAlternativaDao daoAlternativa;
+    private final IHistoricoJogadorDao daoHistoricoJogador;
+    private final ISimuladoDao daoSimulado;
 
     public Facade() {
         this.daoUsuario = DaoFactory.createUsuarioDao();
