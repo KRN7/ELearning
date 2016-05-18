@@ -147,7 +147,7 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
             pst.setString(1, u.getNome());
             pst.setString(2, u.getNick());
             pst.setString(3, u.getSenha());
-            pst.setInt(4, (int) u.getId());
+            pst.setLong(4, u.getId());
             pst.executeUpdate();
             this.getConexao().commit();
             this.fecharConexao();

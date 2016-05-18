@@ -2,6 +2,7 @@ package br.com.elearning.praticas.frame;
 
 import br.com.elearning.praticas.dialog.CadastrarUser;
 import br.com.elearning.praticas.dialog.DialogSobre;
+import br.com.elearning.praticas.dialog.EditarUser;
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
 import java.awt.Color;
