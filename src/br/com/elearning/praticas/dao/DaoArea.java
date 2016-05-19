@@ -5,7 +5,7 @@
  */
 package br.com.elearning.praticas.dao;
 
-import br.com.elearning.praticas.util.Conexao;
+import br.com.elearning.praticas.util.ConnectionFactory;
 import br.com.elearning.praticas.interfaces.IAreaDao;
 import br.com.elearning.praticas.model.Area;
 import br.com.elearning.praticas.util.PropertiesUtils;

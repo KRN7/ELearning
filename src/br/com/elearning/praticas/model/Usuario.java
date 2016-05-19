@@ -10,6 +10,7 @@ package br.com.elearning.praticas.model;
  * @author RicksonEllen
  */
 public class Usuario {
+
     //ATRIBUTOS
     private long id;
     private String nome;
@@ -66,10 +67,10 @@ public class Usuario {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
     @Override
-    public String toString(){
-        return "nome: "+this.nome+", tipo: "+this.tipo;
+    public String toString() {
+        return "id: " + this.id + ", nome: " + this.nome + ", tipo: " + this.tipo;
     }
-    
+
 }

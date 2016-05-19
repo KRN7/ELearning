@@ -2,6 +2,7 @@ package br.com.elearning.praticas.dialog;
 
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
+import br.com.elearning.praticas.util.Criptografia;
 import br.com.elearning.praticas.util.PropertiesUtils;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -22,7 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-public class CadastrarUser extends JDialog {
+public class DialogCadastrarUsuario extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JTextField tfNome;
@@ -42,13 +43,13 @@ public class CadastrarUser extends JDialog {
      * Launch the application.
      */
     public static void main(String[] args) {
-        new CadastrarUser();
+        new DialogCadastrarUsuario();
     }
 
     /**
      * Create the dialog.
      */
-    public CadastrarUser() {
+    public DialogCadastrarUsuario() {
         setSize(335, 257);
         setTitle("CADASTRAR USUARIO");
         setResizable(false);
@@ -111,16 +112,18 @@ public class CadastrarUser extends JDialog {
                     Usuario user = new Usuario();
                     user.setNome(tfNome.getText());
                     user.setNick(tfUsername.getText());
-                    user.setSenha(String.valueOf(tfSenha.getPassword()));
+                    String senhaMd5 = new Criptografia().md5(String.valueOf(tfSenha.getPassword()));
+                    System.out.println(senhaMd5);
+                    user.setSenha(senhaMd5);
                     user.setEmail(tfEmail.getText());
                     user.setTipo(TIPO);
                     facade.salvarUsuario(user);
 
-                    JOptionPane.showMessageDialog(CadastrarUser.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_SUCCEED_ADD_USER));
+                    JOptionPane.showMessageDialog(DialogCadastrarUsuario.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_SUCCEED_ADD_USER));
                     dispose();
                 } catch (Exception ex) {
-                    Logger.getLogger(CadastrarUser.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(CadastrarUser.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_ADD_USER));
+                    Logger.getLogger(DialogCadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(DialogCadastrarUsuario.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_ADD_USER));
                 }
             }
         });

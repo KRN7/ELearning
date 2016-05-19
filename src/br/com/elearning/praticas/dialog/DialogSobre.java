@@ -11,6 +11,7 @@ import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 public class DialogSobre extends JDialog {
@@ -40,6 +41,7 @@ public class DialogSobre extends JDialog {
         setResizable(false);
         setLocationRelativeTo(null);
         setTitle("SOBRE");
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src\\res\\miniLogo.png"));
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

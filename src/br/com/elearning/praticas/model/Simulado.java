@@ -35,7 +35,7 @@ public class Simulado {
     public void setAno(int ano) {
         this.ano = ano;
     }
-    
+
     @Override
     public String toString() {
         return "Ano do Simulado: " + ano;

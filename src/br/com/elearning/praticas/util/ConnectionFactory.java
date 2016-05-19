@@ -7,7 +7,7 @@ import java.sql.DriverManager;
  *
  * @author Felipe
  */
-public class Conexao {
+public class ConnectionFactory {
 
     private static Connection con;
     private static boolean closeConection;

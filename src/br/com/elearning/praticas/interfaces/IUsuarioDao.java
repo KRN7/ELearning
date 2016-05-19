@@ -22,7 +22,9 @@ public interface IUsuarioDao {
 
     public Usuario buscarUsuario(String nome, String senha) throws Exception;
 
+    public Usuario buscarUsuario(long id) throws Exception;
+
     public List<Usuario> listarUsuario() throws Exception;
 
-    public void editarUsuario (Usuario usuario);
+    public void editarUsuario(Usuario usuario);
 }

@@ -24,27 +24,27 @@ import br.com.elearning.praticas.interfaces.ISimuladoDao;
  */
 public class DaoFactory {
 
-    public static IUsuarioDao createUsuarioDao() {
+    public static IUsuarioDao createDaoUsuario() {
         return new DaoUsuario();
     }
 
-    public static IPerguntaDao createPerguntaDao() {
+    public static IPerguntaDao createDaoPergunta() {
         return new DaoPergunta();
     }
 
-    public static IAreaDao createAreaDao() {
+    public static IAreaDao createDaoArea() {
         return new DaoArea();
     }
 
-    public static IAlternativaDao createAlternativaDao() {
+    public static IAlternativaDao createDaoAlternativa() {
         return new DaoAlternativa();
     }
 
-    public static IHistoricoJogadorDao createHistoricoDao() {
+    public static IHistoricoJogadorDao createDaoHistorico() {
         return new DaoHistorico();
     }
 
-    public static ISimuladoDao createSimuladoDao() {
+    public static ISimuladoDao createDaoSimulado() {
         return new DaoSimulado();
     }
 }

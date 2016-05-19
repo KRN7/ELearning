@@ -1,10 +1,12 @@
 package br.com.elearning.praticas.frame;
 
-import br.com.elearning.praticas.dialog.CadastrarUser;
+import br.com.elearning.praticas.dialog.DialogCadastrarUsuario;
+import br.com.elearning.praticas.dialog.DialogContato;
 import br.com.elearning.praticas.dialog.DialogSobre;
-import br.com.elearning.praticas.dialog.EditarUser;
+import br.com.elearning.praticas.dialog.DialogEditarUser;
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
+import br.com.elearning.praticas.util.Criptografia;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -56,7 +58,9 @@ public class MainFrame extends JFrame {
     private JMenu mnSobre;
     private JMenu mnSeparador;
     private JMenuItem mntmSobre;
+    private JMenuItem mntmContato;
     private Facade facade;
+    private static LoadingScreen loadScreen;
 
     /**
      * Launch the application.
@@ -64,6 +68,9 @@ public class MainFrame extends JFrame {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            loadScreen = new LoadingScreen();
+            Thread.sleep(3000);
+            loadScreen.dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -94,7 +101,7 @@ public class MainFrame extends JFrame {
         mnSeparador.setEnabled(false);
         menuBar.add(mnSeparador);
 
-        mnSobre = new JMenu("INFO");
+        mnSobre = new JMenu("SOBRE - AJUDA");
         menuBar.add(mnSobre);
 
         mntmSobre = new JMenuItem("SOBRE");
@@ -104,6 +111,14 @@ public class MainFrame extends JFrame {
             }
         });
         mnSobre.add(mntmSobre);
+
+        mntmContato = new JMenuItem("CONTATE-NOS");
+        mntmContato.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new DialogContato();
+            }
+        });
+        mnSobre.add(mntmContato);
 
         mntmIniciarSimulado = new JMenuItem();
         mntmIniciarSimulado.addActionListener(new ActionListener() {
@@ -117,6 +132,11 @@ public class MainFrame extends JFrame {
         mnNomeUser.add(sep);
 
         mntmEditarConta = new JMenuItem("EDITAR CONTA");
+        mntmEditarConta.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                new DialogEditarUser();
+            }
+        });
         mnNomeUser.add(mntmEditarConta);
 
         mntmVisualizarHistorico = new JMenuItem("");
@@ -183,9 +203,11 @@ public class MainFrame extends JFrame {
         btnEntrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Usuario user = null;
+                String senhaMd5 = Criptografia.md5(String.valueOf(tfSenha.getPassword()));
 
                 try {
-                    user = facade.buscarUsuario(tfLogin.getText(), String.valueOf(tfSenha.getPassword()));
+                    user = facade.buscarUsuario(tfLogin.getText(), senhaMd5);
+                    System.out.println(user);
                 } catch (Exception ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -228,7 +250,7 @@ public class MainFrame extends JFrame {
         lblCadastrarse.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new CadastrarUser();
+                new DialogCadastrarUsuario();
             }
         });
 

@@ -49,7 +49,7 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
 
     @Override
     public void removerUsuario(Usuario u) throws Exception {
-        String sql = "delete from usuario u where u.id = ?";
+        String sql = "delete from usuario u where u.iduser = ?";
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
@@ -93,7 +93,7 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
             while (rs.next()) {
                 if (rs.getString("nick").equals(nick) && rs.getString("senha").equals(senha)) {
                     Usuario user = new Usuario();
-                    user.setId(rs.getInt("id"));
+                    user.setId(rs.getInt("iduser"));
                     user.setNome(rs.getString("nome"));
                     user.setNick(rs.getString("nick"));
                     user.setSenha(rs.getString("senha"));
@@ -122,7 +122,7 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Usuario user = new Usuario();
-                user.setId(rs.getInt("id"));
+                user.setId(rs.getInt("iduser"));
                 user.setNome(rs.getString("nome"));
                 user.setNick(rs.getString("nick"));
                 user.setSenha(rs.getString("senha"));
@@ -140,7 +140,7 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
 
     @Override
     public void editarUsuario(Usuario u) {
-        String sql = "UPDATE usuario SET nome = ?, nick =?, senha=? where id = ?";
+        String sql = "UPDATE usuario SET nome = ?, nick =?, senha=? where iduser = ?";
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
@@ -156,6 +156,34 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
                     null, e);
             throw new RuntimeException(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_UPDATE));
         }
+    }
+
+    @Override
+    public Usuario buscarUsuario(long id) throws Exception {
+        String sql = "select * from usuario";
+
+        try {
+            PreparedStatement pst = this.getConexao().prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                if (rs.getLong("iduser") == id) {
+                    Usuario user = new Usuario();
+                    user.setId(rs.getInt("iduser"));
+                    user.setNome(rs.getString("nome"));
+                    user.setNick(rs.getString("nick"));
+                    user.setSenha(rs.getString("senha"));
+                    user.setEmail(rs.getString("email"));
+                    user.setTipo(rs.getString("tipo"));
+                    this.fecharConexao();
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE,
+                    null, e);
+            throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_SEARCH_USER));
+        }
+        return null;
     }
 
 }

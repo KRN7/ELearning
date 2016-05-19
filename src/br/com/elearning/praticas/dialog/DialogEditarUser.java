@@ -2,6 +2,7 @@ package br.com.elearning.praticas.dialog;
 
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
+import br.com.elearning.praticas.util.Criptografia;
 import br.com.elearning.praticas.util.PropertiesUtils;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -22,7 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-public class EditarUser extends JDialog {
+public class DialogEditarUser extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JTextField tfNome;
@@ -42,18 +43,19 @@ public class EditarUser extends JDialog {
     private JTextField tfLogin;
     private JLabel lblSenha_1;
     private JPasswordField pfSenha;
+    private Usuario user = null;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
-        new EditarUser();
+        new DialogEditarUser();
     }
 
     /**
      * Create the dialog.
      */
-    public EditarUser() {
+    public DialogEditarUser() {
         setSize(335, 257);
         setTitle("EDITAR USUARIO");
         setResizable(false);
@@ -123,38 +125,61 @@ public class EditarUser extends JDialog {
 //        pfSenha = new JPasswordField();
 //        pfSenha.setBounds(72, 45, 181, 20);
 //        panelLogin.add(pfSenha);
+        panelLogin = new JPanel();
+        panelLogin.setBounds(32, 30, 263, 145);
+        contentPanel.add(panelLogin);
+        panelLogin.setLayout(null);
+
+        lblLogin = new JLabel("LOGIN:");
+        lblLogin.setBounds(10, 23, 46, 14);
+        panelLogin.add(lblLogin);
+
+        tfLogin = new JTextField();
+        tfLogin.setBounds(62, 20, 191, 20);
+        panelLogin.add(tfLogin);
+        tfLogin.setColumns(10);
+
+        lblSenha_1 = new JLabel("SENHA:");
+        lblSenha_1.setBounds(10, 55, 46, 14);
+        panelLogin.add(lblSenha_1);
+
+        pfSenha = new JPasswordField();
+        pfSenha.setBounds(72, 45, 181, 20);
+        panelLogin.add(pfSenha);
 
         btnEditar = new JButton("ENTRAR");
         btnEditar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Usuario user = null;
+                    String senhaMd5 = Criptografia.md5(String.valueOf(pfSenha.getPassword()));
                     if (btnEditar.getText().equals("ENTRAR")) {
                         user = facade.buscarUsuario(tfLogin.getText(),
-                                String.valueOf(pfSenha.getPassword()));
+                                senhaMd5);
+                        System.out.println(user);
                         btnEditar.setText("EDITAR");
                         panelLogin.setVisible(false);
                         panel.setVisible(true);
+                        return;
                     }
                     if (btnEditar.getText().equals("EDITAR")) {
+                        String newSenha = Criptografia.md5(String.valueOf(tfSenha.getPassword()));
                         user.setNome(tfNome.getText());
                         user.setNick(tfUsername.getText());
-                        user.setSenha(String.valueOf(tfSenha.getPassword()));
+                        user.setSenha(newSenha);
+                        System.out.println(user);
                         facade.editarUsuario(user);
                         panel.setVisible(false);
                         panelLogin.setVisible(true);
                         JOptionPane
-                                .showMessageDialog(
-                                        EditarUser.this,
+                                .showMessageDialog(DialogEditarUser.this,
                                         PropertiesUtils
                                         .getMsgValue(PropertiesUtils.MSG_SUCCEED_UPDATE_USER));
                         dispose();
                     }
                 } catch (Exception ex) {
-                    Logger.getLogger(EditarUser.class.getName()).log(
+                    Logger.getLogger(DialogEditarUser.class.getName()).log(
                             Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(
-                            EditarUser.this,
+                    JOptionPane.showMessageDialog(DialogEditarUser.this,
                             PropertiesUtils
                             .getMsgValue(PropertiesUtils.MSG_ERRO_UPDATE));
                 }
@@ -162,28 +187,6 @@ public class EditarUser extends JDialog {
         });
         btnEditar.setBounds(115, 191, 102, 23);
         contentPanel.add(btnEditar);
-        
-                panelLogin = new JPanel();
-		panelLogin.setBounds(32, 30, 263, 145);
-		contentPanel.add(panelLogin);
-		panelLogin.setLayout(null);
-				
-		lblLogin = new JLabel("LOGIN:");
-		lblLogin.setBounds(10, 23, 46, 14);
-		panelLogin.add(lblLogin);
-				
-		tfLogin = new JTextField();
-		tfLogin.setBounds(62, 20, 191, 20);
-		panelLogin.add(tfLogin);
-		tfLogin.setColumns(10);
-				
-		lblSenha_1 = new JLabel("SENHA:");
-		lblSenha_1.setBounds(10, 55, 46, 14);
-		panelLogin.add(lblSenha_1);
-				
-                pfSenha = new JPasswordField();
-		pfSenha.setBounds(72, 45, 181, 20);
-		panelLogin.add(pfSenha);
 
         setVisible(true);
     }

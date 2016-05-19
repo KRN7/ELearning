@@ -21,8 +21,8 @@ public interface IHistoricoJogadorDao {
 
     public void editarHistorico(Usuario u, Pergunta p, HistoricoJogador h) throws Exception;
 
-    public void editarHistorico2(Usuario u, Pergunta p, HistoricoJogador h) throws Exception;
+    public void editarHistoricoPerguntasRespondidas(Usuario u, Pergunta p, HistoricoJogador h) throws Exception;
 
-    public long salvarPergunta(Pergunta p) throws Exception;
+    public long salvarPergunta(Pergunta p, HistoricoJogador h) throws Exception;
 
 }

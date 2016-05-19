@@ -28,40 +28,44 @@ public class HistoricoJogador {
         this.perguntasCertas = perguntasCertas;
     }
 
-    public int getPerguntasRespondidas() {
-        return perguntasRespondidas;
-    }
-
-    public int getPerguntasCertas() {
-        return perguntasCertas;
-    }
-
-    public void setPerguntasRespondidas(int perguntasRespondidas) {
-        this.perguntasRespondidas = perguntasRespondidas;
-    }
-
-    public void setPerguntasCertas(int perguntasCertas) {
-        this.perguntasCertas = perguntasCertas;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public void setPergunta(Pergunta pergunta) {
-        this.pergunta = pergunta;
-    }
-
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Usuario getUsuario() {
         return usuario;
     }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public Pergunta getPergunta() {
         return pergunta;
+    }
+
+    public void setPergunta(Pergunta pergunta) {
+        this.pergunta = pergunta;
+    }
+
+    public int getPerguntasRespondidas() {
+        return perguntasRespondidas;
+    }
+
+    public void setPerguntasRespondidas(int perguntasRespondidas) {
+        this.perguntasRespondidas = perguntasRespondidas;
+    }
+
+    public int getPerguntasCertas() {
+        return perguntasCertas;
+    }
+
+    public void setPerguntasCertas(int perguntasCertas) {
+        this.perguntasCertas = perguntasCertas;
     }
 
     @Override

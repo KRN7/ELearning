@@ -5,7 +5,7 @@
  */
 package br.com.elearning.praticas.interfaces;
 
-import br.com.elearning.praticas.model.Simulado;
+import br.com.elearning.praticas.model.*;
 import java.util.List;
 
 /**
@@ -16,8 +16,14 @@ public interface ISimuladoDao {
 
     public void salvar(Simulado s) throws Exception;
 
-    public List<Simulado> listar() throws Exception;
+    public List<Simulado> listarSimulado() throws Exception;
 
-    public Simulado buscar(int ano) throws Exception;
+    public List<SimuladoUsuario> listarSimuladoUsuario() throws Exception;
+
+    public List<SimuladoPergunta> listarSimuladoPergunta() throws Exception;
+
+    public Simulado buscarSimulado(int ano) throws Exception;
+
+    public Simulado buscarSimulado(long id) throws Exception;
 
 }

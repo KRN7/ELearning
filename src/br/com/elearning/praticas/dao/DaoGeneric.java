@@ -5,7 +5,7 @@
  */
 package br.com.elearning.praticas.dao;
 
-import br.com.elearning.praticas.util.Conexao;
+import br.com.elearning.praticas.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -19,13 +19,13 @@ public class DaoGeneric {
 
     public Connection getConexao() throws SQLException {
         if (this.con == null || this.con.isClosed()) {
-            this.con = Conexao.getConnection();
+            this.con = ConnectionFactory.getConnection();
             this.con.setAutoCommit(false);
         }
         return this.con;
     }
 
     public void fecharConexao() {
-        Conexao.closeConnection();
+        ConnectionFactory.closeConnection();
     }
 }
