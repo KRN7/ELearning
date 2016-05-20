@@ -23,6 +23,8 @@ public interface IUsuarioDao {
     public Usuario buscarUsuario(String nome, String senha) throws Exception;
 
     public Usuario buscarUsuario(long id) throws Exception;
+    
+    public Usuario buscarUsuarioSenha(String senha) throws Exception;
 
     public List<Usuario> listarUsuario() throws Exception;
 

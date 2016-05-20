@@ -110,6 +110,33 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
         }
         return null;
     }
+    @Override
+    public Usuario buscarUsuarioSenha(String senha) throws Exception {
+        String sql = "select * from usuario";
+
+        try {
+            PreparedStatement pst = this.getConexao().prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                if (rs.getString("senha").equals(senha)) {
+                    Usuario user = new Usuario();
+                    user.setId(rs.getInt("iduser"));
+                    user.setNome(rs.getString("nome"));
+                    user.setNick(rs.getString("nick"));
+                    user.setSenha(rs.getString("senha"));
+                    user.setEmail(rs.getString("email"));
+                    user.setTipo(rs.getString("tipo"));
+                    this.fecharConexao();
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE,
+                    null, e);
+            throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_SEARCH_USER));
+        }
+        return null;
+    }
 
     @Override
     public List<Usuario> listarUsuario() throws Exception {

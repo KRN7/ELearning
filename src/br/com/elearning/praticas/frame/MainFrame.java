@@ -68,6 +68,7 @@ public class MainFrame extends JFrame {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//            UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
             loadScreen = new LoadingScreen();
             Thread.sleep(3000);
             loadScreen.dispose();
@@ -225,6 +226,7 @@ public class MainFrame extends JFrame {
             }
         });
         btnEntrar.setBounds(69, 171, 89, 23);
+        getRootPane().setDefaultButton(btnEntrar);
         panelLogin.add(btnEntrar);
 
         tfSenha = new JPasswordField();

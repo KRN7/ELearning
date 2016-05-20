@@ -39,8 +39,6 @@ public class DialogEditarUser extends JDialog {
     private Facade facade;
     public static final String TIPO = "J";
     private JPanel panelLogin;
-    private JLabel lblLogin;
-    private JTextField tfLogin;
     private JLabel lblSenha_1;
     private JPasswordField pfSenha;
     private Usuario user = null;
@@ -68,7 +66,7 @@ public class DialogEditarUser extends JDialog {
         contentPanel.setLayout(null);
 
         this.facade = new Facade();
-
+        
         panel = new JPanel();
         panel.setVisible(false);
         panel.setBackground(Color.WHITE);
@@ -79,72 +77,65 @@ public class DialogEditarUser extends JDialog {
         panel.setLayout(null);
 
         lblNome = new JLabel("NOME:");
-        lblNome.setBounds(10, 24, 33, 14);
+        lblNome.setBounds(10, 40, 33, 14);
         panel.add(lblNome);
 
         lblUsername = new JLabel("USERNAME:");
-        lblUsername.setBounds(10, 49, 58, 14);
+        lblUsername.setBounds(10, 65, 58, 14);
         panel.add(lblUsername);
 
         lblSenha = new JLabel("SENHA:");
-        lblSenha.setBounds(10, 74, 58, 14);
+        lblSenha.setBounds(10, 90, 37, 14);
         panel.add(lblSenha);
 
         tfNome = new JTextField();
-        tfNome.setBounds(48, 21, 205, 20);
+        tfNome.setBounds(57, 37, 196, 20);
         panel.add(tfNome);
         tfNome.setColumns(10);
 
         tfUsername = new JTextField();
-        tfUsername.setBounds(76, 46, 177, 20);
+        tfUsername.setBounds(76, 62, 177, 20);
         panel.add(tfUsername);
         tfUsername.setColumns(10);
 
         tfSenha = new JPasswordField();
-        tfSenha.setBounds(48, 71, 205, 20);
+        tfSenha.setBounds(57, 87, 196, 20);
         panel.add(tfSenha);
 
-//        panelLogin = new JPanel();
-//        panelLogin.setBounds(0, 0, 263, 145);
-//        panel.add(panelLogin);
-//        panelLogin.setLayout(null);
-//
-//        lblLogin = new JLabel("LOGIN:");
-//        lblLogin.setBounds(10, 23, 46, 14);
-//        panelLogin.add(lblLogin);
-//
-//        tfLogin = new JTextField();
-//        tfLogin.setBounds(62, 20, 191, 20);
-//        panelLogin.add(tfLogin);
-//        tfLogin.setColumns(10);
-//
-//        lblSenha_1 = new JLabel("SENHA:");
-//        lblSenha_1.setBounds(10, 55, 46, 14);
-//        panelLogin.add(lblSenha_1);
-//
-//        pfSenha = new JPasswordField();
-//        pfSenha.setBounds(72, 45, 181, 20);
-//        panelLogin.add(pfSenha);
+        //        panelLogin = new JPanel();
+        //        panelLogin.setBounds(0, 0, 263, 145);
+        //        panel.add(panelLogin);
+        //        panelLogin.setLayout(null);
+        //
+        //        lblLogin = new JLabel("LOGIN:");
+        //        lblLogin.setBounds(10, 23, 46, 14);
+        //        panelLogin.add(lblLogin);
+        //
+        //        tfLogin = new JTextField();
+        //        tfLogin.setBounds(62, 20, 191, 20);
+        //        panelLogin.add(tfLogin);
+        //        tfLogin.setColumns(10);
+        //
+        //        lblSenha_1 = new JLabel("SENHA:");
+        //        lblSenha_1.setBounds(10, 55, 46, 14);
+        //        panelLogin.add(lblSenha_1);
+        //
+        //        pfSenha = new JPasswordField();
+        //        pfSenha.setBounds(72, 45, 181, 20);
+        //        panelLogin.add(pfSenha);
         panelLogin = new JPanel();
+        panelLogin.setBackground(Color.WHITE);
+        panelLogin.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panelLogin.setBounds(32, 30, 263, 145);
         contentPanel.add(panelLogin);
         panelLogin.setLayout(null);
 
-        lblLogin = new JLabel("LOGIN:");
-        lblLogin.setBounds(10, 23, 46, 14);
-        panelLogin.add(lblLogin);
-
-        tfLogin = new JTextField();
-        tfLogin.setBounds(62, 20, 191, 20);
-        panelLogin.add(tfLogin);
-        tfLogin.setColumns(10);
-
         lblSenha_1 = new JLabel("SENHA:");
-        lblSenha_1.setBounds(10, 55, 46, 14);
+        lblSenha_1.setBounds(16, 66, 46, 14);
         panelLogin.add(lblSenha_1);
 
         pfSenha = new JPasswordField();
-        pfSenha.setBounds(72, 45, 181, 20);
+        pfSenha.setBounds(60, 63, 181, 20);
         panelLogin.add(pfSenha);
 
         btnEditar = new JButton("ENTRAR");
@@ -153,8 +144,7 @@ public class DialogEditarUser extends JDialog {
                 try {
                     String senhaMd5 = Criptografia.md5(String.valueOf(pfSenha.getPassword()));
                     if (btnEditar.getText().equals("ENTRAR")) {
-                        user = facade.buscarUsuario(tfLogin.getText(),
-                                senhaMd5);
+                        user = facade.buscarUsuarioSenha(senhaMd5);
                         System.out.println(user);
                         btnEditar.setText("EDITAR");
                         panelLogin.setVisible(false);

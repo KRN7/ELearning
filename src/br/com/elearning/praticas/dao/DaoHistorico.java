@@ -18,7 +18,7 @@ import java.util.logging.*;
  */
 public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
 
-    private Facade facade = new Facade();
+//    private Facade facade = new Facade();
 
     @Override
     public void salvarHistoricoJogador(HistoricoJogador h, Pergunta p, Usuario u) throws Exception {
@@ -44,8 +44,8 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
     @Override
     public HistoricoJogador buscarHistorico(long id) throws Exception {
         String sql = "select * from historicoJogador";
-        Usuario user = facade.buscarUsuarioID(id);
-        Pergunta p = facade.buscarPergunta(id);
+//        Usuario user = facade.buscarUsuarioID(id);
+//        Pergunta p = facade.buscarPergunta(id);
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);

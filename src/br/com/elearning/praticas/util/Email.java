@@ -25,16 +25,17 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Email {
 
-    private Session session = null;
-    
-    public Email(){
+    Session session = null;
+    private String username = "freirepereira.wandersonfelipe@gmail.com";
+    private String senha = "lebagunca";
+
+    public Email() {
         ajustaParametros();
     }
 
     public void enviarEmail(String from, String assunto, String conteudo) {
 
         try {
-
             Message message = new MimeMessage(session);
 
             //Configura o Remetente da mensagem
@@ -50,8 +51,14 @@ public class Email {
             //Configura o Conteudo da mensagem
             message.setText(conteudo);
 
+            System.out.println("From: " + from);
+            System.out.println("Assunto: " + assunto);
+            System.out.println("Conteudo: " + conteudo);
+            System.out.println("Msg: " + message);
+
             Transport.send(message);
 
+            System.out.println("Feito!!!");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -74,10 +81,9 @@ public class Email {
         /**
          * Associa autenticação a sessao de correio
          */
-        session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
+        session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("wandersonfelipe@ffm.com.br", "lebagunca");
+                return new PasswordAuthentication(username, senha);
             }
         });
 
