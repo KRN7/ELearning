@@ -20,11 +20,13 @@ public interface IUsuarioDao {
 
     public boolean verificarUsuario(String nome) throws Exception;
 
-    public Usuario buscarUsuario(String nome, String senha) throws Exception;
+    public Usuario buscarUsuarioLogin(String nome, String senha) throws Exception;
 
     public Usuario buscarUsuario(long id) throws Exception;
-    
+
     public Usuario buscarUsuarioSenha(String senha) throws Exception;
+
+    public Usuario buscarUsuarioEmail(String email) throws Exception;
 
     public List<Usuario> listarUsuario() throws Exception;
 

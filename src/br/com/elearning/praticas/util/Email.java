@@ -5,6 +5,7 @@
  */
 package br.com.elearning.praticas.util;
 
+import br.com.elearning.praticas.model.Usuario;
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -26,20 +27,20 @@ import javax.mail.internet.MimeMultipart;
 public class Email {
 
     Session session = null;
-    private String username = "freirepereira.wandersonfelipe@gmail.com";
-    private String senha = "lebagunca";
+    private String username = "emailpraticas@ffm.com.br";
+    private String senha = "Praticas123";
 
     public Email() {
         ajustaParametros();
     }
 
-    public void enviarEmail(String from, String assunto, String conteudo) {
+    public void enviarEmail(Usuario user, String assunto, String conteudo) {
 
         try {
             Message message = new MimeMessage(session);
 
             //Configura o Remetente da mensagem
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress("emailpraticas@ffm.com.br"));
 
             //Configura o Destinatário da mensagem
             Address[] toUser = InternetAddress.parse("elearningpraticas@gmail.com");
@@ -49,16 +50,9 @@ public class Email {
             message.setSubject(assunto);
 
             //Configura o Conteudo da mensagem
-            message.setText(conteudo);
-
-            System.out.println("From: " + from);
-            System.out.println("Assunto: " + assunto);
-            System.out.println("Conteudo: " + conteudo);
-            System.out.println("Msg: " + message);
+            message.setText(conteudo + "\n\n\n\nUSERNAME: " + user.getNick()+ "\nEMAIL: " + user.getEmail());
 
             Transport.send(message);
-
-            System.out.println("Feito!!!");
         } catch (MessagingException e) {
             e.printStackTrace();
         }

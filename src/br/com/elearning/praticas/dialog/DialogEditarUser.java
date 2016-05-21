@@ -176,6 +176,7 @@ public class DialogEditarUser extends JDialog {
             }
         });
         btnEditar.setBounds(115, 191, 102, 23);
+        getRootPane().setDefaultButton(btnEditar);
         contentPanel.add(btnEditar);
 
         setVisible(true);

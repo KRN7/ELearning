@@ -58,12 +58,16 @@ public class Facade implements Serializable {
         return this.daoUsuario.verificarUsuario(nome);
     }
 
-    public Usuario buscarUsuario(String nome, String senha) throws Exception {
-        return this.daoUsuario.buscarUsuario(nome, senha);
+    public Usuario buscarUsuarioLogin(String nome, String senha) throws Exception {
+        return this.daoUsuario.buscarUsuarioLogin(nome, senha);
     }
     
     public Usuario buscarUsuarioSenha(String senha) throws Exception {
         return this.daoUsuario.buscarUsuarioSenha(senha);
+    }
+    
+    public Usuario buscarUsuarioEmail(String email) throws Exception {
+        return this.daoUsuario.buscarUsuarioEmail(email);
     }
     
     public Usuario buscarUsuarioID(long id) throws Exception {

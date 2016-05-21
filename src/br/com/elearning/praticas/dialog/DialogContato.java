@@ -1,5 +1,7 @@
 package br.com.elearning.praticas.dialog;
 
+import br.com.elearning.praticas.facade.Facade;
+import br.com.elearning.praticas.model.Usuario;
 import br.com.elearning.praticas.util.Email;
 import java.awt.BorderLayout;
 
@@ -9,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -28,6 +32,7 @@ public class DialogContato extends JDialog {
     private JLabel lblFrom;
     private JPanel panel;
     private JButton btnEnviar;
+    private Facade facade;
 
     /**
      * Launch the application.
@@ -52,12 +57,14 @@ public class DialogContato extends JDialog {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
+        this.facade = new Facade();
+
         panel = new JPanel();
         panel.setBounds(10, 11, 526, 304);
         contentPanel.add(panel);
         panel.setLayout(null);
 
-        lblFrom = new JLabel("FROM:");
+        lblFrom = new JLabel("NICK:");
         lblFrom.setBounds(10, 11, 33, 14);
         panel.add(lblFrom);
 
@@ -87,7 +94,13 @@ public class DialogContato extends JDialog {
         btnEnviar = new JButton("ENVIAR");
         btnEnviar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new Email().enviarEmail(tfFrom.getText(), tfAssunto.getText(), tfConteudo.getText());
+                try {
+                    Usuario user = facade.buscarUsuarioEmail(tfFrom.getText());
+                    new Email().enviarEmail(user, tfAssunto.getText(), tfConteudo.getText());
+                    dispose();
+                } catch (Exception ex) {
+                    Logger.getLogger(DialogContato.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         btnEnviar.setBounds(226, 325, 89, 23);

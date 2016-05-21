@@ -133,8 +133,8 @@ public class MainFrame extends JFrame {
         mnNomeUser.add(sep);
 
         mntmEditarConta = new JMenuItem("EDITAR CONTA");
-        mntmEditarConta.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        mntmEditarConta.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 new DialogEditarUser();
             }
         });
@@ -207,7 +207,7 @@ public class MainFrame extends JFrame {
                 String senhaMd5 = Criptografia.md5(String.valueOf(tfSenha.getPassword()));
 
                 try {
-                    user = facade.buscarUsuario(tfLogin.getText(), senhaMd5);
+                    user = facade.buscarUsuarioLogin(tfLogin.getText(), senhaMd5);
                     System.out.println(user);
                 } catch (Exception ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
