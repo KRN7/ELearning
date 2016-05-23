@@ -31,11 +31,15 @@ public class PropertiesUtils {
     public static final String MSG_ERRO_ADD_QUESTION = "msg.error.add_question";
     public static final String MSG_ERRO_SEARCH_QUESTION = "msg.error.search_question";
     public static final String MSG_ERRO_LIST_QUESTION = "msg.error.list_question";
+    public static final String MSG_ERRO_DELETE_QUESTION = "msg.error.delete_question";
     public static final String MSG_SUCCEED_ADD_QUESTION = "msg.succeed.add_question";
     public static final String MSG_SUCCEED_SEARCH_QUESTION = "msg.succeed.search_question";
     public static final String MSG_SUCCEED_UPDATE_QUESTION = "msg.succeed.update_question";
     public static final String MSG_SUCCEED_DELETE_QUESTION = "msg.succeed.delete_question";
     public static final String MSG_SUCCEED_LIST_QUESTION = "msg.succeed.list_question";
+    public static final String MSG_ERRO_MONTAR_TABELA = "msg.error.montar_tabela";
+    public static final String MSG_ERRO_TABELA_VAZIA = "msg.error.tabela_vazia";
+    public static final String MSG_ERRO_SELECIONE_UMA_QUESTAO = "msg.error.selecione_uma_questao";
     //MSG AREA
     public static final String MSG_ERRO_ADD_AREA = "msg.error.add_area";
     public static final String MSG_ERRO_ADD_AREA_DUPLICATE = "msg.error.add_area_duplicate";
@@ -59,7 +63,7 @@ public class PropertiesUtils {
     public static final String MSG_ERRO_ADD_HISTORICO = "msg.error.add_historico";
     public static final String MSG_ERRO_SEARCH_HISTORICO = "msg.error.search_historico";
     
-    //MSG GENERICAS
+    //MSG GENERIC
     public static final String MSG_ERRO_UPDATE = "msg.error.update";
     public static final String MSG_ERRO_DELETE = "msg.error.delete";
     

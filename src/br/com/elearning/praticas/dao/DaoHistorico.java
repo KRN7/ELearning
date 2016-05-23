@@ -78,6 +78,7 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             pst.setInt(1, h.getPerguntasCertas() + 1);
             pst.setInt(2, h.getPerguntasRespondidas() + 1);
+            pst.setLong(3,h.getId());
             this.getConexao().commit();
             this.fecharConexao();
         } catch (SQLException e) {

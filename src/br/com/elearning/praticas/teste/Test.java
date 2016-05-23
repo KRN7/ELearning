@@ -1,5 +1,6 @@
 package br.com.elearning.praticas.teste;
 
+import br.com.elearning.praticas.dao.DaoAlternativa;
 import br.com.elearning.praticas.model.Pergunta;
 import br.com.elearning.praticas.model.Usuario;
 import br.com.elearning.praticas.model.HistoricoJogador;
@@ -7,6 +8,7 @@ import br.com.elearning.praticas.dao.DaoHistorico;
 import br.com.elearning.praticas.dao.DaoSimulado;
 import br.com.elearning.praticas.util.ConnectionFactory;
 import br.com.elearning.praticas.facade.Facade;
+import br.com.elearning.praticas.model.Alternativa;
 import br.com.elearning.praticas.model.Area;
 import br.com.elearning.praticas.model.Simulado;
 import br.com.elearning.praticas.model.SimuladoPergunta;
@@ -29,10 +31,13 @@ import java.util.logging.Logger;
 public class Test {
 
     private static Facade facade;
+    private static DaoAlternativa altDao;
 
     public static void main(String[] w) {
 
         facade = new Facade();
+        altDao = new DaoAlternativa();
+        
         try {
             if (ConnectionFactory.getConnection() != null) {
                 System.out.println("conexao ok\n");
@@ -53,6 +58,21 @@ public class Test {
 //ok
             List<SimuladoPergunta> sp = facade.listarSimuladoPergunta();
             System.out.println(sp);
+            
+            Pergunta p = facade.buscarPergunta(4);
+            
+            Alternativa a = altDao.buscarAlternativa(1);
+            System.out.println(p);
+            System.out.println(a);
+            
+            
+            a.setAlt1("aki");
+            a.setAlt2("ali");
+            a.setAlt3("la");
+            a.setAlt4("ali");
+            a.setAlt5("NDA");
+            a.setAltCorreta("la");
+            altDao.editarAlternativa(a,p);
 
         } catch (Exception ex) {
             ex.printStackTrace();

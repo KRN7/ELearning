@@ -61,15 +61,15 @@ public class Facade implements Serializable {
     public Usuario buscarUsuarioLogin(String nome, String senha) throws Exception {
         return this.daoUsuario.buscarUsuarioLogin(nome, senha);
     }
-    
+
     public Usuario buscarUsuarioSenha(String senha) throws Exception {
         return this.daoUsuario.buscarUsuarioSenha(senha);
     }
-    
+
     public Usuario buscarUsuarioEmail(String email) throws Exception {
         return this.daoUsuario.buscarUsuarioEmail(email);
     }
-    
+
     public Usuario buscarUsuarioID(long id) throws Exception {
         return this.daoUsuario.buscarUsuario(id);
     }
@@ -83,8 +83,8 @@ public class Facade implements Serializable {
     }
 
     //METODOS DO DAO PERGUNTA
-    public void salvarPergunta(Pergunta p) throws Exception {
-        this.daoPergunta.salvarPergunta(p);
+    public long salvarPergunta(Pergunta p) throws Exception {
+        return this.daoPergunta.salvarPergunta(p);
     }
 
     public boolean verificarPergunta(String questao) throws Exception {
@@ -120,6 +120,10 @@ public class Facade implements Serializable {
         return this.daoArea.buscarArea(id);
     }
 
+    public Area buscarArea(String nome) throws Exception {
+        return this.daoArea.buscarArea(nome);
+    }
+
     public List<Area> listarArea() throws Exception {
         return this.daoArea.listarArea();
     }
@@ -133,8 +137,8 @@ public class Facade implements Serializable {
     }
 
     //METODOS DO DAO ALTERNATIVA
-    public long salvarAlternativa(Alternativa a) throws Exception {
-        return this.daoAlternativa.salvarAlternativa(a);
+    public void salvarAlternativa(Alternativa a, Pergunta p) throws Exception {
+        this.daoAlternativa.salvarAlternativa(a, p);
     }
 
     public List<Alternativa> listar() throws Exception {
@@ -158,12 +162,12 @@ public class Facade implements Serializable {
     public List<SimuladoUsuario> listarSimuladoUsuario() throws Exception {
         return this.daoSimulado.listarSimuladoUsuario();
     }
-    
-    public List<Simulado> listarSimulado() throws Exception{
+
+    public List<Simulado> listarSimulado() throws Exception {
         return this.daoSimulado.listarSimulado();
     }
-    
-    public List<SimuladoPergunta> listarSimuladoPergunta() throws Exception{
+
+    public List<SimuladoPergunta> listarSimuladoPergunta() throws Exception {
         return this.daoSimulado.listarSimuladoPergunta();
     }
 

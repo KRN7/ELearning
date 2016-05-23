@@ -6,6 +6,7 @@
 package br.com.elearning.praticas.interfaces;
 
 import br.com.elearning.praticas.model.Alternativa;
+import br.com.elearning.praticas.model.Pergunta;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface IAlternativaDao {
     
-    public long salvarAlternativa(Alternativa a) throws Exception;
+    public void salvarAlternativa(Alternativa a, Pergunta p) throws Exception;
     
     public List<Alternativa> listar() throws Exception;
     

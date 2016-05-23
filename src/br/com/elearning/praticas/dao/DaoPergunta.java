@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,21 +27,29 @@ import java.util.logging.Logger;
 public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
 
     @Override
-    public void salvarPergunta(Pergunta p) throws Exception {
+    public long salvarPergunta(Pergunta p) throws Exception {
+        long result = -1;
         String sql = "insert into pergunta (questao, nivel, id_area) values (?, ?, ?)";
 
         try {
-            PreparedStatement pst = this.getConexao().prepareStatement(sql);
+            PreparedStatement pst = this.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, p.getQuestao());
             pst.setString(2, p.getNivel());
             pst.setLong(3, p.getArea().getId());
             pst.executeUpdate();
-            this.getConexao().commit();
-            this.fecharConexao();
+
+            try (ResultSet rs = pst.getGeneratedKeys()) {
+                if (rs.next()) {
+                    result = rs.getLong(1);
+                }
+            }
         } catch (SQLException ex) {
+            ex.printStackTrace();
+            result = -1;
             Logger.getLogger(DaoPergunta.class.getName()).log(Level.SEVERE, null, ex);
             throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_ADD_QUESTION));
         }
+        return result;
     }
 
     @Override
@@ -95,7 +104,7 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                if (Long.valueOf(rs.getString("id")) == id) {
+                if (rs.getLong("id") == id) {
                     Pergunta p = new Pergunta();
                     p.setId(rs.getInt("id"));
                     p.setQuestao(rs.getString("questao"));
@@ -143,10 +152,13 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
         String sql = "DELETE FROM pergunta p where p.id = ?";
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
-            pst.setLong(1, p.getId());
-            pst.executeUpdate();
-            this.getConexao().commit();
-            this.fecharConexao();
+            ResultSet rs = pst.executeQuery();
+            if (rs.getLong("id") == p.getId()) {
+                pst.setLong(1, p.getId());
+                pst.executeUpdate();
+                this.getConexao().commit();
+                this.fecharConexao();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_DELETE));

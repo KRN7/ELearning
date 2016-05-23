@@ -86,7 +86,7 @@ public class Alternativa {
 
     @Override
     public String toString() {
-        return "Alternativa{" + "id=" + id + ", alt1=" + alt1 + ", alt2=" + alt2 + ", alt3=" + alt3 + ", alt4=" + alt4 + ", alt5=" + alt5 + '}';
+        return "Alternativa{" + "id=" + id + ", alt1=" + alt1 + ", alt2=" + alt2 + ", alt3=" + alt3 + ", alt4=" + alt4 + ", alt5=" + alt5 + ", altCorreta="+altCorreta+'}';
     }
 
 }

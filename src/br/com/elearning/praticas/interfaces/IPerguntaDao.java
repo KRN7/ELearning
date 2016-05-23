@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IPerguntaDao {
 
-    public void salvarPergunta(Pergunta p) throws Exception;
+    public long salvarPergunta(Pergunta p) throws Exception;
 
     public boolean verificarPergunta(String questao) throws Exception;
 

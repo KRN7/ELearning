@@ -5,10 +5,13 @@
  */
 package br.com.elearning.praticas.dao;
 
+import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Pergunta;
 import br.com.elearning.praticas.model.Alternativa;
 import br.com.elearning.praticas.interfaces.IAlternativaDao;
+import br.com.elearning.praticas.model.Area;
 import br.com.elearning.praticas.util.PropertiesUtils;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,11 +27,13 @@ import java.util.logging.Logger;
 public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
 
     @Override
-    public long salvarAlternativa(Alternativa a) throws Exception {
-        long resultado = -1;
+    public void salvarAlternativa(Alternativa a, Pergunta p) throws Exception {
         String sql = "insert into alternativa (alt1, alt2, alt3, alt4, alt5, altcorreta, id_pergunta) values (?, ?, ?, ?, ?, ?, ?);";
 
         try {
+            long id_pergunta = new Facade().salvarPergunta(p);
+
+            System.out.println(id_pergunta);
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             pst.setString(1, a.getAlt1());
             pst.setString(2, a.getAlt2());
@@ -36,23 +41,41 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
             pst.setString(4, a.getAlt4());
             pst.setString(5, a.getAlt5());
             pst.setString(6, a.getAltCorreta());
-            pst.setInt(7, (int) a.getPergunta().getId());
+            pst.setLong(7, id_pergunta);
             pst.executeUpdate();
 
-            try (ResultSet rs = pst.getGeneratedKeys()) {
-                if (rs.next()) {
-                    resultado = rs.getLong(1);
-                }
-            }
             this.getConexao().commit();
             this.fecharConexao();
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            resultado = -1;
             Logger.getLogger(DaoPergunta.class.getName()).log(Level.SEVERE, null, ex);
             throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_ADD_ALTERNATIVE));
         }
-        return resultado;
+    }
+
+    public Alternativa buscarAlternativa(long id) throws Exception {
+        String sql = "select * from alternativa a , pergunta p where a.id_pergunta = p.id";
+        try {
+            PreparedStatement pst = this.getConexao().prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                if (rs.getLong("id") == id) {
+                    Alternativa a = new Alternativa();
+                    a.setId(rs.getInt("id"));
+                    a.setAlt1(rs.getString("alt1"));
+                    a.setAlt2(rs.getString("alt2"));
+                    a.setAlt3(rs.getString("alt3"));
+                    a.setAlt4(rs.getString("alt4"));
+                    a.setAlt5(rs.getString("alt5"));
+                    a.setAltCorreta(rs.getString("altcorreta"));
+                    this.fecharConexao();
+                    return a;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoPergunta.class.getName()).log(Level.SEVERE, null, ex);
+            throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_SEARCH_QUESTION));
+        }
+        return null;
     }
 
     @Override
@@ -83,4 +106,42 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
         }
         return alternativas;
     }
+
+    public void editarAlternativa(Alternativa a, Pergunta p) throws Exception {
+        String sql = "UPDATE alternativa SET alt1 = ?, alt2 =?, alt3 = ?, alt4=?, alt5=?, altcorreta=? WHERE id IN (SELECT id FROM pergunta p WHERE " + p.getId() + " = id_pergunta)";
+        try {
+            PreparedStatement pst = getConexao().prepareStatement(sql);
+            pst.setString(1, a.getAlt1());
+            pst.setString(2, a.getAlt2());
+            pst.setString(3, a.getAlt3());
+            pst.setString(4, a.getAlt4());
+            pst.setString(5, a.getAlt5());
+            pst.setString(6, a.getAltCorreta());
+//            pst.setInt(7, (int) p.getId());
+            pst.executeUpdate();
+            this.getConexao().commit();
+            this.fecharConexao();
+        } catch (SQLException e) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE,
+                    null, e);
+            throw new RuntimeException(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_UPDATE));
+        }
+    }
+
+//    public void removerAlternativa(Alternativa a) throws Exception {
+//        String sql = "DELETE FROM pergunta p where p.id = ?";
+//        try {
+//            PreparedStatement pst = this.getConexao().prepareStatement(sql);
+//            ResultSet rs = pst.executeQuery();
+//            if (rs.getLong("id") == p.getId()) {
+//                pst.setLong(1, p.getId());
+//                pst.executeUpdate();
+//                this.getConexao().commit();
+//                this.fecharConexao();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_DELETE));
+//        }
+//    }
 }
