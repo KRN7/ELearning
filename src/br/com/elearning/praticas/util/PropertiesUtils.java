@@ -36,6 +36,7 @@ public class PropertiesUtils {
     public static final String MSG_SUCCEED_SEARCH_QUESTION = "msg.succeed.search_question";
     public static final String MSG_SUCCEED_UPDATE_QUESTION = "msg.succeed.update_question";
     public static final String MSG_SUCCEED_DELETE_QUESTION = "msg.succeed.delete_question";
+    public static final String MSG_ERRO_UPDATE_QUESTION = "msg.error.delete_question";
     public static final String MSG_SUCCEED_LIST_QUESTION = "msg.succeed.list_question";
     public static final String MSG_ERRO_MONTAR_TABELA = "msg.error.montar_tabela";
     public static final String MSG_ERRO_TABELA_VAZIA = "msg.error.tabela_vazia";

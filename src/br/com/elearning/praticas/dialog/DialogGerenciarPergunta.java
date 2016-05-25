@@ -25,48 +25,44 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class GerenciarPergunta extends JDialog {
+public class DialogGerenciarPergunta extends JDialog {
 
     private JButton btnCadastrarPergunta;
     private JButton btnVOLTAR;
     private JButton btnRemoverPergunta;
-    private JButton btnEditarPerguntas;
+    private JButton btnEditarPergunta;
     private JTable table;
     private Facade facade;
     private DefaultTableModel tableModel;
 
-    public GerenciarPergunta() {
-        setBounds(0, 0, 944, 493);
+    public DialogGerenciarPergunta() {
+        setSize(944, 493);
+        setResizable(false);
+        setModal(true);
+        setLocationRelativeTo(null);
         getContentPane().setLayout(null);
         this.facade = new Facade();
 
-        btnCadastrarPergunta = new JButton("Cadastrar Pergunta");
+        btnCadastrarPergunta = new JButton("CADASTRAR PERGUNTA");
         btnCadastrarPergunta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CadastrarPergunta();
+                new DialogCadastrarPergunta();
             }
         });
-        btnCadastrarPergunta.setBounds(787, 161, 131, 50);
+        btnCadastrarPergunta.setBounds(756, 40, 162, 50);
         getContentPane().add(btnCadastrarPergunta);
 
-        btnRemoverPergunta = new JButton("REMOVER PERGUNTA");
-        btnRemoverPergunta.addActionListener(new ActionListener() {
+        btnEditarPergunta = new JButton("EDITAR PERGUNTA");
+        btnEditarPergunta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                editarPergunta();
             }
         });
-        btnRemoverPergunta.setBounds(787, 91, 131, 50);
-        getContentPane().add(btnRemoverPergunta);
-
-        btnVOLTAR = new JButton("VOLTAR");
-        btnVOLTAR.setBounds(10, 459, 89, 23);
-        getContentPane().add(btnVOLTAR);
-
-        btnEditarPerguntas = new JButton("EDITAR PERGUNTA");
-        btnEditarPerguntas.setBounds(787, 21, 131, 50);
-        getContentPane().add(btnEditarPerguntas);
+        btnEditarPergunta.setBounds(756, 125, 162, 50);
+        getContentPane().add(btnEditarPergunta);
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 0, 761, 448);
+        scrollPane.setBounds(10, 0, 720, 448);
         getContentPane().add(scrollPane);
 
         table = new JTable();
@@ -89,8 +85,8 @@ public class GerenciarPergunta extends JDialog {
                 tableModel.addRow(new Object[]{p.getQuestao(), p.getNivel(), p.getArea()});
             }
         } catch (Exception ex) {
-            Logger.getLogger(GerenciarPergunta.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(GerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_MONTAR_TABELA));
+            Logger.getLogger(DialogGerenciarPergunta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(DialogGerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_MONTAR_TABELA));
         }
 
     }
@@ -106,11 +102,11 @@ public class GerenciarPergunta extends JDialog {
         int linha = table.getSelectedRow();
 
         if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(GerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_TABELA_VAZIA));
+            JOptionPane.showMessageDialog(DialogGerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_TABELA_VAZIA));
             return;
         }
         if (linha == -1) {
-            JOptionPane.showMessageDialog(GerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_SELECIONE_UMA_QUESTAO));
+            JOptionPane.showMessageDialog(DialogGerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_SELECIONE_UMA_QUESTAO));
             return;
         }
         String questao = table.getValueAt(linha, 0).toString();
@@ -118,18 +114,18 @@ public class GerenciarPergunta extends JDialog {
         try {
             Pergunta p = facade.buscarPergunta(questao);
             System.out.println(p);
-            int x = JOptionPane.showConfirmDialog(rootPane, "VOCÊ  TEM CERTEZA QUE REALMENTE DESEJA REMOVER A QUESTÃO? ", "REMOVER PERGUNTA", JOptionPane.OK_CANCEL_OPTION);
+            int x = JOptionPane.showConfirmDialog(rootPane, "VOCÊ  TEM CERTEZA QUE REALMENTE DESEJA EDITAR A QUESTÃO? ", "EDITAR PERGUNTA", JOptionPane.OK_CANCEL_OPTION);
             if (x == JOptionPane.OK_OPTION) {
-                facade.removerPergunta(p);
+                new DialogEditarPergunta();
                 return;
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(GerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_DELETE_QUESTION));
+            JOptionPane.showMessageDialog(DialogGerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_UPDATE_QUESTION));
             e.printStackTrace();
         }
     }
-    
+
 //    private void removerPergunta() {
 //        DefaultTableModel model = (DefaultTableModel) table.getModel();
 //        int linha = table.getSelectedRow();

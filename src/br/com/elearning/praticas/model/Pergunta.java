@@ -15,6 +15,7 @@ public class Pergunta {
     private String questao;
     private Area area;
     private String nivel;
+    private boolean status;
 
     public long getId() {
         return id;
@@ -48,9 +49,17 @@ public class Pergunta {
         this.nivel = nivel;
     }
 
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Pergunta{" + "id=" + id + ", questao=" + questao + ", area=" + area + ", nivel=" + nivel + "}\n";
+        return "Pergunta{" + "id=" + id + ", questao=" + questao + ", area=" + area + ", nivel=" + nivel + ", Status: " + status + "}\n";
     }
 
 }

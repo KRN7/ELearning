@@ -29,7 +29,7 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
     @Override
     public long salvarPergunta(Pergunta p) throws Exception {
         long result = -1;
-        String sql = "insert into pergunta (questao, nivel, id_area) values (?, ?, ?)";
+        String sql = "insert into pergunta (questao, nivel, status, id_area) values (?, ?, ?, ?)";
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -134,6 +134,7 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
                 p.setId(rs.getInt("id"));
                 p.setQuestao(rs.getString("questao"));
                 p.setNivel(rs.getString("nivel"));
+                p.setStatus(true);
                 Area a = new Facade().buscarArea(rs.getInt("id_area"));
                 p.setArea(a);
                 perguntas.add(p);
@@ -166,12 +167,13 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
     }
 
     public void editarPergunta(Pergunta p) throws Exception {
-        String sql = "UPDATE pergunta SET questao = ?, nivel =? where id = ?";
+        String sql = "UPDATE pergunta SET questao = ?, nivel =?, status=? where id = ?";
         try {
             PreparedStatement pst = getConexao().prepareStatement(sql);
             pst.setString(1, p.getQuestao());
             pst.setString(2, p.getNivel());
-            pst.setInt(3, (int) p.getId());
+            pst.setBoolean(3, p.getStatus());
+            pst.setInt(4, (int) p.getId());
             pst.executeUpdate();
             this.getConexao().commit();
             this.fecharConexao();
