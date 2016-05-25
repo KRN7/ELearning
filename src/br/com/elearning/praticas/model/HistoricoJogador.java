@@ -70,7 +70,7 @@ public class HistoricoJogador {
 
     @Override
     public String toString() {
-        return "Resposta{" + "perguntas=" + perguntasRespondidas + ", PerguntasCertas=" + perguntasCertas + '}';
+        return "jogador: { nome: "+usuario.getNome() + ", perguntas=" + perguntasRespondidas + ", PerguntasCertas=" + perguntasCertas + '}';
     }
 
 }

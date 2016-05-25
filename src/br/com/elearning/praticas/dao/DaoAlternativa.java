@@ -33,7 +33,6 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
         try {
             long id_pergunta = new Facade().salvarPergunta(p);
 
-            System.out.println(id_pergunta);
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             pst.setString(1, a.getAlt1());
             pst.setString(2, a.getAlt2());

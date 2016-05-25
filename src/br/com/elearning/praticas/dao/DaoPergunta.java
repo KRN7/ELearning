@@ -85,7 +85,6 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
                     p.setNivel(rs.getString("nivel"));
                     Area area = new DaoArea().buscarArea(rs.getInt("id_area"));
                     p.setArea(area);
-                    System.out.println(p.toString());
                     this.fecharConexao();
                     return p;
                 }

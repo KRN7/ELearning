@@ -4,6 +4,7 @@ import br.com.elearning.praticas.dialog.DialogCadastrarUsuario;
 import br.com.elearning.praticas.dialog.DialogContato;
 import br.com.elearning.praticas.dialog.DialogSobre;
 import br.com.elearning.praticas.dialog.DialogEditarUser;
+import br.com.elearning.praticas.dialog.DialogGerenciarPergunta;
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
 import br.com.elearning.praticas.util.Criptografia;
@@ -208,7 +209,6 @@ public class MainFrame extends JFrame {
 
                 try {
                     user = facade.buscarUsuarioLogin(tfLogin.getText(), senhaMd5);
-                    System.out.println(user);
                 } catch (Exception ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -278,7 +278,7 @@ public class MainFrame extends JFrame {
         }
         if (user.getTipo().equalsIgnoreCase("a")) {
             menuBar.setVisible(true);
-            mntmIniciarSimulado.setText("CADASTRAR PERGUNTA");
+            mntmIniciarSimulado.setText("GERENCIAR PERGUNTA");
             mntmVisualizarHistorico.setText("VISUALIZAR JOGADORES");
             panelLogin.setVisible(false);
             mnNomeUser.setText(user.getNome().toUpperCase() + " - ADMIN");
@@ -289,8 +289,8 @@ public class MainFrame extends JFrame {
     }
 
     public void filtrarPrimeiroItem() {
-        if (mntmIniciarSimulado.getText().equals("CADASTRAR PERGUNTA")) {
-            JOptionPane.showMessageDialog(MainFrame.this, "DIALOG DE CADASTRAR PERGUNTA AKI");
+        if (mntmIniciarSimulado.getText().equals("GERENCIAR PERGUNTA")) {
+                new DialogGerenciarPergunta();
         }
         if (mntmIniciarSimulado.getText().equals("NOVO SIMULADO")) {
             JOptionPane.showMessageDialog(MainFrame.this, "DIALOG DE NOVO SIMULADO AKI");

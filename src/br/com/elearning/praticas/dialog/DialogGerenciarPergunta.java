@@ -110,10 +110,8 @@ public class DialogGerenciarPergunta extends JDialog {
             return;
         }
         String questao = table.getValueAt(linha, 0).toString();
-        System.out.println("Questão: " + questao + " Linha: " + linha);
         try {
             Pergunta p = facade.buscarPergunta(questao);
-            System.out.println(p);
             int x = JOptionPane.showConfirmDialog(rootPane, "VOCÊ  TEM CERTEZA QUE REALMENTE DESEJA EDITAR A QUESTÃO? ", "EDITAR PERGUNTA", JOptionPane.OK_CANCEL_OPTION);
             if (x == JOptionPane.OK_OPTION) {
                 new DialogEditarPergunta();
@@ -125,34 +123,4 @@ public class DialogGerenciarPergunta extends JDialog {
             e.printStackTrace();
         }
     }
-
-//    private void removerPergunta() {
-//        DefaultTableModel model = (DefaultTableModel) table.getModel();
-//        int linha = table.getSelectedRow();
-//
-//        if (model.getRowCount() == 0) {
-//            JOptionPane.showMessageDialog(GerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_TABELA_VAZIA));
-//            return;
-//        }
-//        if (linha == -1) {
-//            JOptionPane.showMessageDialog(GerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_SELECIONE_UMA_QUESTAO));
-//            return;
-//        }
-//        String questao = table.getValueAt(linha, 0).toString();
-//        System.out.println("Questão: " + questao + " Linha: " + linha);
-//        try {
-//            Pergunta p = facade.buscarPergunta(questao);
-//            System.out.println(p);
-////            JOptionPane.showMessageDialog(GerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_SUCCEED_DELETE_QUESTION));
-//            int x = JOptionPane.showConfirmDialog(rootPane, "VOCÊ  TEM CERTEZA QUE REALMENTE DESEJA REMOVER A QUESTÃO? ", "REMOVER PERGUNTA", JOptionPane.OK_CANCEL_OPTION);
-//            if (x == JOptionPane.OK_OPTION) {
-//                facade.removerPergunta(p);
-//                return;
-//            }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(GerenciarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_DELETE_QUESTION));
-//            e.printStackTrace();
-//        }
-//    }
 }

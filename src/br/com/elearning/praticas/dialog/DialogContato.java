@@ -64,12 +64,12 @@ public class DialogContato extends JDialog {
         contentPanel.add(panel);
         panel.setLayout(null);
 
-        lblFrom = new JLabel("NICK:");
-        lblFrom.setBounds(10, 11, 33, 14);
+        lblFrom = new JLabel("USERNAME:");
+        lblFrom.setBounds(10, 11, 64, 14);
         panel.add(lblFrom);
 
         tfFrom = new JTextField();
-        tfFrom.setBounds(53, 8, 231, 20);
+        tfFrom.setBounds(74, 8, 210, 20);
         panel.add(tfFrom);
         tfFrom.setColumns(10);
 
@@ -106,6 +106,5 @@ public class DialogContato extends JDialog {
         btnEnviar.setBounds(226, 325, 89, 23);
         contentPanel.add(btnEnviar);
         setVisible(true);
-
     }
 }

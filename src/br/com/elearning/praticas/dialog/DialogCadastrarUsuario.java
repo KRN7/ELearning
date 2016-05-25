@@ -113,7 +113,6 @@ public class DialogCadastrarUsuario extends JDialog {
                     user.setNome(tfNome.getText());
                     user.setNick(tfUsername.getText());
                     String senhaMd5 = new Criptografia().md5(String.valueOf(tfSenha.getPassword()));
-                    System.out.println(senhaMd5);
                     user.setSenha(senhaMd5);
                     user.setEmail(tfEmail.getText());
                     user.setTipo(TIPO);

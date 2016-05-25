@@ -10,6 +10,9 @@ import br.com.elearning.praticas.interfaces.IHistoricoJogadorDao;
 import br.com.elearning.praticas.model.*;
 import br.com.elearning.praticas.util.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.*;
 
 /**
@@ -19,7 +22,6 @@ import java.util.logging.*;
 public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
 
 //    private Facade facade = new Facade();
-
     @Override
     public void salvarHistoricoJogador(HistoricoJogador h, Pergunta p, Usuario u) throws Exception {
         String sql = "insert into historicoJogador (qntcertas, qntrespondidas, id_usuario, id_pergunta) values(?, ?, ?, ?)";
@@ -78,7 +80,7 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             pst.setInt(1, h.getPerguntasCertas() + 1);
             pst.setInt(2, h.getPerguntasRespondidas() + 1);
-            pst.setLong(3,h.getId());
+            pst.setLong(3, h.getId());
             this.getConexao().commit();
             this.fecharConexao();
         } catch (SQLException e) {
@@ -88,8 +90,8 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
     }
 
     @Override
-    public void editarHistoricoPerguntasRespondidas(Usuario u, Pergunta p, HistoricoJogador h) throws Exception {//NOME DO METODO & PARAMETROS ERRADOS
-        String sql = "UPDATE historicojogador SET perguntasrespondidas = ? where id_pergunta = " + p.getId(); //INCOMPLETA
+    public void editarHistoricoPerguntasRespondidas(Usuario u, Pergunta p, HistoricoJogador h) throws Exception {
+        String sql = "UPDATE historicojogador SET perguntasrespondidas = ? where id_pergunta = " + p.getId();
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
@@ -102,6 +104,32 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
             throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_UPDATE));
         }
 
+    }
+
+    public List<HistoricoJogador> listarHistoricos() throws Exception {
+        List<HistoricoJogador> his = new ArrayList<>();
+        String sql = "select * from historicojogador";
+        try {
+            PreparedStatement pst = this.getConexao().prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                HistoricoJogador h = new HistoricoJogador();
+                h.setId(rs.getInt("id"));
+                h.setPerguntasCertas(rs.getInt("qntcertas"));
+                h.setPerguntasRespondidas(rs.getInt("qntrespondidas"));
+                Usuario u = new Facade().buscarUsuarioID(rs.getInt("id_usuario"));
+                h.setUsuario(u);
+                Pergunta p = new Facade().buscarPergunta(rs.getInt("id_pergunta"));
+                h.setPergunta(p);
+                his.add(h);
+            }
+            this.fecharConexao();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(DaoPergunta.class.getName()).log(Level.SEVERE, null, ex);
+            throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_LIST_QUESTION));
+        }
+        return his;
     }
 
     public long salvarPergunta(Pergunta p, HistoricoJogador h) throws Exception {

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exemplo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2d104bfa-d4cc-4702-b260-5480b34833fa">
+	<property name="ireport.zoom" value="1.1000000000000028"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="pergunta.questao" class="java.lang.String"/>
+	<field name="altCorreta" class="java.lang.String"/>
+	<title>
+		<band height="108">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="91" backcolor="#FFFFFF" uuid="932a30d2-1a03-4a70-bd44-1e81f220db00"/>
+				<image>
+					<reportElement x="46" y="10" width="246" height="81" uuid="86df6e1f-7a43-49a8-af24-0fe9eb3aa4ac"/>
+					<imageExpression><![CDATA["C:\\Users\\Felipe\\Documents\\ELearning\\src\\res\\elearning_report.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="188" y="34" width="387" height="30" uuid="59636269-9586-41a6-8ba6-08ee53c33542"/>
+					<imageExpression><![CDATA["C:\\Users\\Felipe\\Documents\\ELearning\\src\\res\\title.png"]]></imageExpression>
+				</image>
+			</frame>
+			<staticText>
+				<reportElement x="226" y="71" width="86" height="20" forecolor="#000000" uuid="187aed00-d625-445b-b12f-df2da27b11f4"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[GABARITO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<frame>
+				<reportElement x="-20" y="0" width="595" height="28" backcolor="#6699FF" uuid="26274da4-436b-456c-9912-25c7130c694d"/>
+				<line>
+					<reportElement x="21" y="24" width="553" height="1" forecolor="#000000" uuid="9e89039c-b77f-4f86-9682-f9c5b6ad96c5"/>
+				</line>
+				<staticText>
+					<reportElement x="125" y="5" width="100" height="20" uuid="105679c3-6d74-4d3a-87b4-cd9c272e1bad"/>
+					<textElement>
+						<font size="14" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[PERGUNTA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="346" y="4" width="181" height="20" uuid="ad89fc3c-0163-4fc9-afa1-b15a8017933a"/>
+					<textElement>
+						<font size="14" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[ALTERNATIVA CORRETA]]></text>
+				</staticText>
+				<line>
+					<reportElement x="292" y="0" width="1" height="25" uuid="661065ad-3e30-4059-9555-630c22250a48"/>
+				</line>
+				<line>
+					<reportElement x="21" y="0" width="553" height="1" uuid="f5bc8e03-d7ab-40ad-a34e-f77403d41d8e"/>
+				</line>
+				<line>
+					<reportElement x="20" y="0" width="1" height="25" uuid="fbcf04c9-3564-497a-ab57-d77d90e88f9f"/>
+				</line>
+				<line>
+					<reportElement x="573" y="0" width="1" height="25" uuid="7a12db80-584c-413c-b4b9-05b8b3816255"/>
+				</line>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="732d9afa-4137-4cc5-9c14-d0b6cc3ed284"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="16" y="5" width="249" height="20" uuid="31f847ca-2a20-4a1b-a2c6-11083441075b"/>
+				<textFieldExpression><![CDATA[$F{pergunta.questao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="312" y="5" width="231" height="20" uuid="cdb4d4ef-63b2-4af8-aafc-bb30907502ec"/>
+				<textFieldExpression><![CDATA[$F{altCorreta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50">
+			<staticText>
+				<reportElement x="226" y="16" width="127" height="20" uuid="96c7b402-2fc9-4b7e-b356-df7cd20fb510"/>
+				<text><![CDATA[ © 2015-2016 E-LEARNING]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="265" y="30" width="61" height="20" uuid="8bb86ccc-92a4-4f0b-974f-855a9884078f"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="479" y="30" width="45" height="20" uuid="21044cb8-9437-4d12-85a0-8fdcdfe9a14a"/>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="524" y="30" width="29" height="20" uuid="e4056ea2-2ced-46d4-968a-482cde47b167"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
