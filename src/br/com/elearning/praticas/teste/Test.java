@@ -1,7 +1,9 @@
 package br.com.elearning.praticas.teste;
 
 import br.com.elearning.praticas.facade.Facade;
+import br.com.elearning.praticas.model.SimuladoUsuario;
 import br.com.elearning.praticas.util.*;
+import java.util.List;
 import java.util.logging.*;
 
 /*
@@ -31,12 +33,13 @@ public class Test {
                 System.out.println("conexao falhou\n");
                 facade = new Facade();
             }
-            
+
+            List<SimuladoUsuario> lista = facade.listarSimuladoUsuario();
+            System.out.println(lista);
 
         } catch (Exception ex) {
             ex.printStackTrace();
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

@@ -117,7 +117,7 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
                 h.setId(rs.getInt("id"));
                 h.setPerguntasCertas(rs.getInt("qntcertas"));
                 h.setPerguntasRespondidas(rs.getInt("qntrespondidas"));
-                Usuario u = new Facade().buscarUsuarioID(rs.getInt("id_usuario"));
+                Usuario u = new Facade().buscarUsuarioId(rs.getInt("id_usuario"));
                 h.setUsuario(u);
                 Pergunta p = new Facade().buscarPergunta(rs.getInt("id_pergunta"));
                 h.setPergunta(p);

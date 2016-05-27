@@ -66,6 +66,10 @@ public class MainFrame extends JFrame {
     /**
      * Launch the application.
      */
+    /**
+     * 
+     * @param args - Array de String.
+     */
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

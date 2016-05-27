@@ -70,6 +70,14 @@ public class PropertiesUtils {
     
     //MSG LOGIN
     public static final String MSG_ERRO_LOGIN = "msg.error.login";
+    
+    //MSG REPORTS
+    public static final String REPORTS_PATH = "report.report.path";
+    public static final String TEMPLATE_PATH = "report.template.path";
+    public static final String USER_FILE = "report.user_file";
+    public static final String TEMPLET_FILE = "report.templet_file";
+    public static final String RANK_FILE = "report.rank_file";
+    public static final String COMMAND = "report.command";
 
     /*
     *

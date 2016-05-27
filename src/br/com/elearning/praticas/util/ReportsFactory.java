@@ -29,14 +29,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class ReportsFactory {
 
     private Facade facade = new Facade();
-    private static final String REPORTS_PATH = "src/relatorios/";
-    private static final String USER_TEMPLATE = "src/relatorios/";
-    private static final String TEMPLET_TEMPLATE = "src/relatorios/";
-    private static final String RANK_TEMPLATE = "src/relatorios/";
-    private static final String TEMPLATE_PATH = "src/templates/";
-    private static final String USER_FILE = "Usuarios.pdf";
-    private static final String TEMPLET_FILE = "Gabarito.pdf";
-    private static final String RANK_FILE = "Classificacao.pdf";
 
     public void reportUser() throws Exception {
         try {
@@ -47,9 +39,12 @@ public class ReportsFactory {
                     listaUser.add(u);
                 }
             }
-            JasperReport report = JasperCompileManager.compileReport(TEMPLATE_PATH + "listausuarios.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(PropertiesUtils.getConfigValue(PropertiesUtils.TEMPLATE_PATH) + "listausuarios.jrxml");
             JasperPrint print = JasperFillManager.fillReport(report, null, new JRBeanCollectionDataSource(listaUser));
-            JasperExportManager.exportReportToPdfFile(print, REPORTS_PATH + USER_FILE);
+            JasperExportManager.exportReportToPdfFile(print, PropertiesUtils.getConfigValue(PropertiesUtils.REPORTS_PATH) + PropertiesUtils.getConfigValue(PropertiesUtils.USER_FILE));
+            Runtime run = Runtime.getRuntime();
+            run = Runtime.getRuntime();
+            Process proc = run.exec(PropertiesUtils.getConfigValue(PropertiesUtils.COMMAND) + PropertiesUtils.getConfigValue(PropertiesUtils.USER_FILE));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -59,9 +54,12 @@ public class ReportsFactory {
         try {
             List<Alternativa> listaPerg = new DaoAlternativa().listar();
             System.out.println(listaPerg);
-            JasperReport report = JasperCompileManager.compileReport(TEMPLATE_PATH + "gabarito.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(PropertiesUtils.getConfigValue(PropertiesUtils.TEMPLATE_PATH) + "gabarito.jrxml");
             JasperPrint print = JasperFillManager.fillReport(report, null, new JRBeanCollectionDataSource(listaPerg));
-            JasperExportManager.exportReportToPdfFile(print, REPORTS_PATH + TEMPLET_FILE);
+            JasperExportManager.exportReportToPdfFile(print, PropertiesUtils.getConfigValue(PropertiesUtils.REPORTS_PATH) + PropertiesUtils.getConfigValue(PropertiesUtils.TEMPLET_FILE));
+            Runtime run = Runtime.getRuntime();
+            run = Runtime.getRuntime();
+            Process proc = run.exec(PropertiesUtils.getConfigValue(PropertiesUtils.COMMAND) + PropertiesUtils.getConfigValue(PropertiesUtils.TEMPLET_FILE));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -70,9 +68,13 @@ public class ReportsFactory {
     public void reportClassificacao() throws Exception {
         try {
             List<HistoricoJogador> listaHis = new DaoHistorico().listarHistoricos();
-            JasperReport report = JasperCompileManager.compileReport(TEMPLATE_PATH + "classificacao.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(PropertiesUtils.getConfigValue(PropertiesUtils.TEMPLATE_PATH) + "classificacao.jrxml");
             JasperPrint print = JasperFillManager.fillReport(report, null, new JRBeanCollectionDataSource(listaHis));
-            JasperExportManager.exportReportToPdfFile(print, REPORTS_PATH + RANK_FILE);
+            JasperExportManager.exportReportToPdfFile(print, PropertiesUtils.getConfigValue(PropertiesUtils.REPORTS_PATH) + PropertiesUtils.getConfigValue(PropertiesUtils.RANK_FILE));
+            Runtime run = Runtime.getRuntime();
+            run = Runtime.getRuntime();
+            Process proc = run.exec(PropertiesUtils.getConfigValue(PropertiesUtils.COMMAND) + PropertiesUtils.getConfigValue(PropertiesUtils.RANK_FILE));
+//            C:\Users\Felipe\Documents\ELearning\src\relatorios
         } catch (Exception ex) {
             ex.printStackTrace();
         }

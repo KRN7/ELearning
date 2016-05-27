@@ -42,6 +42,10 @@ public class DialogCadastrarUsuario extends JDialog {
     /**
      * Launch the application.
      */
+    /**
+     * 
+     * @param args - Array de String
+     */
     public static void main(String[] args) {
         new DialogCadastrarUsuario();
     }
