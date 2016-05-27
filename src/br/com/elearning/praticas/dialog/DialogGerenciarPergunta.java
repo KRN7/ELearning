@@ -112,9 +112,10 @@ public class DialogGerenciarPergunta extends JDialog {
         String questao = table.getValueAt(linha, 0).toString();
         try {
             Pergunta p = facade.buscarPergunta(questao);
+            Alternativa a = facade.buscarAlternativa(p.getId());
             int x = JOptionPane.showConfirmDialog(rootPane, "VOCÊ  TEM CERTEZA QUE REALMENTE DESEJA EDITAR A QUESTÃO? ", "EDITAR PERGUNTA", JOptionPane.OK_CANCEL_OPTION);
             if (x == JOptionPane.OK_OPTION) {
-                new DialogEditarPergunta();
+                new DialogEditarPergunta(p, a);
                 return;
             }
 

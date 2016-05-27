@@ -164,6 +164,7 @@ public class DialogCadastrarPergunta extends JDialog {
                     Area a = facade.buscarArea(String.valueOf(cbArea.getSelectedItem()));
                     pergunta.setNivel(String.valueOf(cbNivel.getSelectedItem()));
                     pergunta.setArea(a);
+                    pergunta.setStatus(true);
                     pergunta.setQuestao(tfPergunta.getText());
                     Alternativa alternativa = new Alternativa();
                     alternativa.setAlt1(tfAlternativa1.getText());
@@ -199,7 +200,7 @@ public class DialogCadastrarPergunta extends JDialog {
         contentPanel.add(lblNivel);
 
         cbNivel = new JComboBox();
-        cbNivel.setModel(new DefaultComboBoxModel(new String[]{"SELECIONE", "FAC\u00CDL", "M\u00C9DIO", "DIF\u00CDCIL"}));
+        cbNivel.setModel(new DefaultComboBoxModel(new String[]{"SELECIONE", "FACIL", "MEDIO", "DIFICIL"}));
         cbNivel.setBounds(216, 561, 62, 20);
         contentPanel.add(cbNivel);
 

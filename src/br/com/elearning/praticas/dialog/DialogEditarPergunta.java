@@ -9,6 +9,11 @@ package br.com.elearning.praticas.dialog;
  *
  * @author Sidney
  */
+import br.com.elearning.praticas.facade.Facade;
+import br.com.elearning.praticas.model.Alternativa;
+import br.com.elearning.praticas.model.Area;
+import br.com.elearning.praticas.model.Pergunta;
+import br.com.elearning.praticas.util.PropertiesUtils;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -22,8 +27,12 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
 public class DialogEditarPergunta extends JDialog {
@@ -57,13 +66,15 @@ public class DialogEditarPergunta extends JDialog {
     private JScrollPane scrollPane_6;
     private JTextField tfAlternativaCorreta;
     private JRadioButton rdbtnStatus;
+    private Pergunta p;
+    private Alternativa a;
+    private Facade facade;
     private JLabel lblStatusDaPergunta;
 
-    public static void main(String[] args) {
-        new DialogEditarPergunta();
-    }
+    public DialogEditarPergunta(Pergunta perg, Alternativa alt) {
+        p = perg;
+        a = alt;
 
-    public DialogEditarPergunta() {
         setSize(555, 694);
         setResizable(false);
         setModal(true);
@@ -72,6 +83,7 @@ public class DialogEditarPergunta extends JDialog {
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
+        this.facade = new Facade();
 
         lblInformeAPergunta = new JLabel("INFORME ABAIXO A NOVA PERGUNTA:");
         lblInformeAPergunta.setBounds(10, 11, 285, 14);
@@ -145,11 +157,36 @@ public class DialogEditarPergunta extends JDialog {
         tfAlternativa5.setLineWrap(true);
         scrollPane_5.setViewportView(tfAlternativa5);
 
-        btnSalvar = new JButton("SALVAR");
+        btnSalvar = new JButton("EDITAR");
         btnSalvar.setBounds(440, 622, 89, 23);
         btnSalvar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                try {
+                    p.setQuestao(tfPergunta.getText());
+                    Area area = facade.buscarArea(String.valueOf(cbArea.getSelectedItem()));
+                    p.setArea(area);
+                    p.setNivel(String.valueOf(cbNivel.getSelectedItem()));
+                    if (rdbtnStatus.isSelected()) {
+                        p.setStatus(false);
+                    }
+                    if (!rdbtnStatus.isSelected()) {
+                        p.setStatus(true);
+                    }
+                    a.setAlt1(tfAlternativa1.getText());
+                    a.setAlt2(tfAlternativa2.getText());
+                    a.setAlt3(tfAlternativa3.getText());
+                    a.setAlt4(tfAlternativa4.getText());
+                    a.setAlt5(tfAlternativa5.getText());
+                    a.setAltCorreta(tfAlternativaCorreta.getText());
 
+                    facade.editarPergunta(p);
+                    facade.editarAlternativa(a, p);
+                    JOptionPane.showMessageDialog(DialogEditarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_SUCCEED_UPDATE_QUESTION));
+                    dispose();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(DialogEditarPergunta.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_UPDATE));
+                    Logger.getLogger(DialogEditarPergunta.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         contentPanel.add(btnSalvar);
@@ -190,7 +227,50 @@ public class DialogEditarPergunta extends JDialog {
         rdbtnStatus = new JRadioButton("MARQUE PARA DESATIVAR:");
         rdbtnStatus.setBounds(343, 560, 161, 23);
         contentPanel.add(rdbtnStatus);
+        if (this.p != null) {
+            carregarComponentes();
+        }
 
         setVisible(true);
     }
+
+    public void preencher() {
+        try {
+            List<Area> lista = new Facade().listarArea();
+            for (Area a : lista) {
+                cbArea.addItem(a);
+            }
+        } catch (Exception e) {
+            //jop
+        }
+    }
+
+    private void carregarComponentes() {
+        tfPergunta.setText(p.getQuestao());
+        preencher();
+        cbArea.setSelectedItem(p.getArea().getAreaNome());
+
+        switch (p.getNivel()) {
+            case "FACIL":
+                cbNivel.setSelectedIndex(1);
+
+                break;
+            case "MEDIO":
+                cbNivel.setSelectedIndex(2);
+
+                break;
+            case "DIFICIL":
+                cbNivel.setSelectedIndex(3);
+
+                break;
+        }
+        tfAlternativa1.setText(a.getAlt1());
+        tfAlternativa2.setText(a.getAlt2());
+        tfAlternativa3.setText(a.getAlt3());
+        tfAlternativa4.setText(a.getAlt4());
+        tfAlternativa5.setText(a.getAlt5());
+        tfAlternativaCorreta.setText(a.getAltCorreta());
+
+    }
+
 }

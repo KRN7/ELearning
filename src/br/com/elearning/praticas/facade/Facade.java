@@ -213,6 +213,11 @@ public class Facade implements Serializable {
     public Pergunta buscarPergunta(long id) throws Exception {
         return this.daoPergunta.buscarPergunta(id);
     }
+//JAVADOC
+
+    public void editarPergunta(Pergunta p) throws Exception {
+        this.daoPergunta.editarPergunta(p);
+    }
 
     /**
      * Método para lista todas as perguntas.
@@ -330,6 +335,17 @@ public class Facade implements Serializable {
     }
 
     /**
+     * Método edita um Pergunta
+     *
+     * @param a
+     * @param p
+     * @throws Exception
+     */
+    public void editarAlternativa(Alternativa a, Pergunta p) throws Exception {
+        this.daoAlternativa.editarAlternativa(a, p);
+    }
+
+    /**
      * Método lista todas as alternativas.
      *
      * @author Felipe
@@ -338,6 +354,14 @@ public class Facade implements Serializable {
      */
     public List<Alternativa> listar() throws Exception {
         return this.daoAlternativa.listar();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Alternativa buscarAlternativa(long id) throws Exception {
+        return this.daoAlternativa.buscarAlternativa(id);
     }
 
     //METODOS DO DAO HISTORICOJOGADOR

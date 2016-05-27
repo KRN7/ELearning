@@ -51,13 +51,14 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
         }
     }
 
+    @Override
     public Alternativa buscarAlternativa(long id) throws Exception {
         String sql = "select * from alternativa a , pergunta p where a.id_pergunta = p.id";
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                if (rs.getLong("id") == id) {
+                if (rs.getLong("id_pergunta") == id) {
                     Alternativa a = new Alternativa();
                     a.setId(rs.getInt("id"));
                     a.setAlt1(rs.getString("alt1"));
@@ -106,8 +107,11 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
         return alternativas;
     }
 
+    @Override
     public void editarAlternativa(Alternativa a, Pergunta p) throws Exception {
-        String sql = "UPDATE alternativa SET alt1 = ?, alt2 =?, alt3 = ?, alt4=?, alt5=?, altcorreta=? WHERE id IN (SELECT id FROM pergunta p WHERE " + p.getId() + " = id_pergunta)";
+        String sql = "UPDATE alternativa SET alt1 = ?, alt2 =?, alt3 = ?, alt4=?, alt5=?, altcorreta=? WHERE id = " + a.getId();
+        System.out.println(p);
+        System.out.println(a);
         try {
             PreparedStatement pst = getConexao().prepareStatement(sql);
             pst.setString(1, a.getAlt1());
@@ -116,7 +120,6 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
             pst.setString(4, a.getAlt4());
             pst.setString(5, a.getAlt5());
             pst.setString(6, a.getAltCorreta());
-//            pst.setInt(7, (int) p.getId());
             pst.executeUpdate();
             this.getConexao().commit();
             this.fecharConexao();

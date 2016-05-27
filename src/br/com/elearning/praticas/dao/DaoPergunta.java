@@ -35,7 +35,9 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
             PreparedStatement pst = this.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, p.getQuestao());
             pst.setString(2, p.getNivel());
-            pst.setLong(3, p.getArea().getId());
+
+            pst.setBoolean(3, p.getStatus());
+            pst.setLong(4, p.getArea().getId());
             pst.executeUpdate();
 
             try (ResultSet rs = pst.getGeneratedKeys()) {
@@ -165,14 +167,16 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
         }
     }
 
+    @Override
     public void editarPergunta(Pergunta p) throws Exception {
-        String sql = "UPDATE pergunta SET questao = ?, nivel =?, status=? where id = ?";
+        String sql = "UPDATE pergunta SET questao = ?, nivel =?, status=?, id_area =? where id =" + p.getId();
+        System.out.println(p);
         try {
             PreparedStatement pst = getConexao().prepareStatement(sql);
             pst.setString(1, p.getQuestao());
             pst.setString(2, p.getNivel());
             pst.setBoolean(3, p.getStatus());
-            pst.setInt(4, (int) p.getId());
+            pst.setLong(4, p.getArea().getId());
             pst.executeUpdate();
             this.getConexao().commit();
             this.fecharConexao();
