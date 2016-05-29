@@ -108,10 +108,8 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
     }
 
     @Override
-    public void editarAlternativa(Alternativa a, Pergunta p) throws Exception {
+    public void editarAlternativa(Alternativa a) throws Exception {
         String sql = "UPDATE alternativa SET alt1 = ?, alt2 =?, alt3 = ?, alt4=?, alt5=?, altcorreta=? WHERE id = " + a.getId();
-        System.out.println(p);
-        System.out.println(a);
         try {
             PreparedStatement pst = getConexao().prepareStatement(sql);
             pst.setString(1, a.getAlt1());

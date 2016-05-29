@@ -35,7 +35,6 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
             PreparedStatement pst = this.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, p.getQuestao());
             pst.setString(2, p.getNivel());
-
             pst.setBoolean(3, p.getStatus());
             pst.setLong(4, p.getArea().getId());
             pst.executeUpdate();
@@ -87,6 +86,7 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
                     p.setNivel(rs.getString("nivel"));
                     Area area = new DaoArea().buscarArea(rs.getInt("id_area"));
                     p.setArea(area);
+                    p.setStatus(rs.getBoolean("status"));
                     this.fecharConexao();
                     return p;
                 }
@@ -112,6 +112,7 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
                     p.setNivel(rs.getString("nivel"));
                     Area area = new DaoArea().buscarArea(rs.getInt("id_area"));
                     p.setArea(area);
+                    p.setStatus(rs.getBoolean("status"));
                     this.fecharConexao();
                     return p;
                 }
@@ -135,7 +136,7 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
                 p.setId(rs.getInt("id"));
                 p.setQuestao(rs.getString("questao"));
                 p.setNivel(rs.getString("nivel"));
-                p.setStatus(true);
+                p.setStatus(rs.getBoolean("status"));
                 Area a = new Facade().buscarArea(rs.getInt("id_area"));
                 p.setArea(a);
                 perguntas.add(p);
@@ -170,7 +171,6 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
     @Override
     public void editarPergunta(Pergunta p) throws Exception {
         String sql = "UPDATE pergunta SET questao = ?, nivel =?, status=?, id_area =? where id =" + p.getId();
-        System.out.println(p);
         try {
             PreparedStatement pst = getConexao().prepareStatement(sql);
             pst.setString(1, p.getQuestao());

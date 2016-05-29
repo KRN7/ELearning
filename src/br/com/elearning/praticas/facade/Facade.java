@@ -213,8 +213,12 @@ public class Facade implements Serializable {
     public Pergunta buscarPergunta(long id) throws Exception {
         return this.daoPergunta.buscarPergunta(id);
     }
-//JAVADOC
 
+    /**Método edita uma Pergunta.
+     * @author Sidney
+     * @param p - Pergunta a ser editada.
+     * @throws Exception - Caso lance Exception.
+     */
     public void editarPergunta(Pergunta p) throws Exception {
         this.daoPergunta.editarPergunta(p);
     }
@@ -336,13 +340,12 @@ public class Facade implements Serializable {
 
     /**
      * Método edita um Pergunta
-     *
-     * @param a
-     * @param p
-     * @throws Exception
+     *@author Felipe
+     * @param a - Alternativa a ser editada.
+     * @throws Exception - Caso lance Exception.
      */
-    public void editarAlternativa(Alternativa a, Pergunta p) throws Exception {
-        this.daoAlternativa.editarAlternativa(a, p);
+    public void editarAlternativa(Alternativa a) throws Exception {
+        this.daoAlternativa.editarAlternativa(a);
     }
 
     /**

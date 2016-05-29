@@ -34,9 +34,6 @@ public class Test {
                 facade = new Facade();
             }
 
-            List<SimuladoUsuario> lista = facade.listarSimuladoUsuario();
-            System.out.println(lista);
-
         } catch (Exception ex) {
             ex.printStackTrace();
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);

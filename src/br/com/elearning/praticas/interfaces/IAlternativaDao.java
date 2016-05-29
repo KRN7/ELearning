@@ -15,12 +15,12 @@ import java.util.List;
  */
 public interface IAlternativaDao {
 
-    public void editarAlternativa(Alternativa a, Pergunta p) throws Exception;
-
     public void salvarAlternativa(Alternativa a, Pergunta p) throws Exception;
 
     public List<Alternativa> listar() throws Exception;
 
     public Alternativa buscarAlternativa(long id) throws Exception;
+
+    public void editarAlternativa(Alternativa a) throws Exception;
 
 }

@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
@@ -47,7 +48,7 @@ public class DialogEditarUser extends JDialog {
      * Launch the application.
      */
     /**
-     * 
+     *
      * @param args - Array de String
      */
     public static void main(String[] args) {
@@ -63,14 +64,16 @@ public class DialogEditarUser extends JDialog {
         setResizable(false);
         setModal(true);
         setLocationRelativeTo(null);
+        setTitle("EDITAR PERGUNTA");
         getContentPane().setLayout(new BorderLayout());
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src\\res\\miniLogo.png"));
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
         this.facade = new Facade();
-        
+
         panel = new JPanel();
         panel.setVisible(false);
         panel.setBackground(Color.WHITE);
@@ -106,27 +109,6 @@ public class DialogEditarUser extends JDialog {
         tfSenha.setBounds(57, 87, 196, 20);
         panel.add(tfSenha);
 
-        //        panelLogin = new JPanel();
-        //        panelLogin.setBounds(0, 0, 263, 145);
-        //        panel.add(panelLogin);
-        //        panelLogin.setLayout(null);
-        //
-        //        lblLogin = new JLabel("LOGIN:");
-        //        lblLogin.setBounds(10, 23, 46, 14);
-        //        panelLogin.add(lblLogin);
-        //
-        //        tfLogin = new JTextField();
-        //        tfLogin.setBounds(62, 20, 191, 20);
-        //        panelLogin.add(tfLogin);
-        //        tfLogin.setColumns(10);
-        //
-        //        lblSenha_1 = new JLabel("SENHA:");
-        //        lblSenha_1.setBounds(10, 55, 46, 14);
-        //        panelLogin.add(lblSenha_1);
-        //
-        //        pfSenha = new JPasswordField();
-        //        pfSenha.setBounds(72, 45, 181, 20);
-        //        panelLogin.add(pfSenha);
         panelLogin = new JPanel();
         panelLogin.setBackground(Color.WHITE);
         panelLogin.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -149,7 +131,6 @@ public class DialogEditarUser extends JDialog {
                     String senhaMd5 = Criptografia.md5(String.valueOf(pfSenha.getPassword()));
                     if (btnEditar.getText().equals("ENTRAR")) {
                         user = facade.buscarUsuarioSenha(senhaMd5);
-                        System.out.println(user);
                         btnEditar.setText("EDITAR");
                         panelLogin.setVisible(false);
                         panel.setVisible(true);
@@ -160,7 +141,6 @@ public class DialogEditarUser extends JDialog {
                         user.setNome(tfNome.getText());
                         user.setNick(tfUsername.getText());
                         user.setSenha(newSenha);
-                        System.out.println(user);
                         facade.editarUsuario(user);
                         panel.setVisible(false);
                         panelLogin.setVisible(true);

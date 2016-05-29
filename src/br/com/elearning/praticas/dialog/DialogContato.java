@@ -2,7 +2,7 @@ package br.com.elearning.praticas.dialog;
 
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
-import br.com.elearning.praticas.util.Email;
+import br.com.elearning.praticas.util.EmailUtils;
 import java.awt.BorderLayout;
 
 import javax.swing.JDialog;
@@ -100,7 +100,7 @@ public class DialogContato extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Usuario user = facade.buscarUsuarioEmail(tfFrom.getText());
-                    new Email().enviarEmail(user, tfAssunto.getText(), tfConteudo.getText());
+                    new EmailUtils().enviarEmail(user, tfAssunto.getText(), tfConteudo.getText());
                     dispose();
                 } catch (Exception ex) {
                     Logger.getLogger(DialogContato.class.getName()).log(Level.SEVERE, null, ex);

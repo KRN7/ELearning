@@ -24,13 +24,13 @@ import javax.mail.internet.MimeMultipart;
  *
  * @author Felipe
  */
-public class Email {
+public class EmailUtils {
 
     Session session = null;
     private String username = "emailpraticas@ffm.com.br";
     private String senha = "Praticas123";
 
-    public Email() {
+    public EmailUtils() {
         ajustaParametros();
     }
 
