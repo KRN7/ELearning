@@ -71,6 +71,9 @@ public class PropertiesUtils {
     //MSG LOGIN
     public static final String MSG_ERRO_LOGIN = "msg.error.login";
     
+    //MSG SIMULADO
+    public static final String MSG_ERRO_START_SIM = "msg.error.simulado";
+    
     //MSG REPORTS
     public static final String REPORTS_PATH = "report.report.path";
     public static final String TEMPLATE_PATH = "report.template.path";

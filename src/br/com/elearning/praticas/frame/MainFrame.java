@@ -5,6 +5,8 @@ import br.com.elearning.praticas.dialog.DialogContato;
 import br.com.elearning.praticas.dialog.DialogSobre;
 import br.com.elearning.praticas.dialog.DialogEditarUser;
 import br.com.elearning.praticas.dialog.DialogGerenciarPergunta;
+import br.com.elearning.praticas.dialog.DialogHistorico;
+import br.com.elearning.praticas.dialog.DialogSimulado;
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
 import br.com.elearning.praticas.util.Criptografia;
@@ -297,13 +299,15 @@ public class MainFrame extends JFrame {
                 new DialogGerenciarPergunta();
         }
         if (mntmIniciarSimulado.getText().equals("NOVO SIMULADO")) {
-            JOptionPane.showMessageDialog(MainFrame.this, "DIALOG DE NOVO SIMULADO AKI");
+                new DialogSimulado();
+            //JOptionPane.showMessageDialog(MainFrame.this, "DIALOG DE NOVO SIMULADO AKI");
         }
     }
 
     public void filtrarSegundoItem() {
         if (mntmVisualizarHistorico.getText().equals("VISUALIZAR HISTORICO")) {
-            JOptionPane.showMessageDialog(MainFrame.this, "VISUALIZAR APENAS O HISTORICO DO JOGADOR AKI");
+            new DialogHistorico();
+            //JOptionPane.showMessageDialog(MainFrame.this, "VISUALIZAR APENAS O HISTORICO DO JOGADOR AKI");
         }
         if (mntmVisualizarHistorico.getText().equals("VISUALIZAR JOGADORES")) {
             JOptionPane.showMessageDialog(MainFrame.this, "VISUALIZAR JOGADORES AKI");
