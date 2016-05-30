@@ -7,8 +7,10 @@ package br.com.elearning.praticas.dialog;
 
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.HistoricoJogador;
+import br.com.elearning.praticas.model.Usuario;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,81 +19,72 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.border.TitledBorder;
 
 public class DialogHistorico extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JTable table;
+    private JButton btnAtualizar;
+    private JScrollPane scrollPane;
+    private JPanel panel;
+    private JLabel lblUsuario;
+    private JLabel lblNAcertos;
+    private JLabel lblAcertos;
+    private JLabel lblNRespondidas;
     private DefaultTableModel tableModel;
-    private final JButton btnAtualizar = new JButton("ATUALIZAR");
-    private Facade facade;
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        new DialogHistorico();
-    }
+    private HistoricoJogador his;
 
     /**
      * Create the dialog.
      */
-    public DialogHistorico() {
-        setSize(725, 487);
-        setTitle("HISTÓRICO");
+    public DialogHistorico(Usuario u) {
+
+        setSize(292, 165);
         setResizable(false);
         setModal(true);
         setLocationRelativeTo(null);
+        setTitle("HISTORICO");
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src\\res\\miniLogo.png"));
         getContentPane().setLayout(new BorderLayout());
+        contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        this.facade = new Facade();
+        try {
+            this.his = new Facade().buscarHistorico(7);
+        } catch (Exception ex) {
+            Logger.getLogger(DialogHistorico.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(24, 24, 669, 369);
-        contentPanel.add(scrollPane);
+        panel = new JPanel();
+        panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+                TitledBorder.TOP, null, null));
+        panel.setBackground(Color.WHITE);
+        panel.setBounds(10, 11, 266, 115);
+        contentPanel.add(panel);
+        panel.setLayout(null);
 
-        table = new JTable();
-        table.setModel(new DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "PERGUNTAS RESPONDIDAS", "ACERTOS"
-                }
-        ) {
-            boolean[] columnEditables = new boolean[]{
-                false, true, true, true
-            };
+        lblNAcertos = new JLabel("N\u00BA ACERTOS: " + his.getPerguntasCertas());
+        lblNAcertos.setBounds(10, 36, 305, 14);
+        panel.add(lblNAcertos);
 
-            public boolean isCellEditable(int row, int column) {
-                return columnEditables[column];
-            }
-        });
-        table.getColumnModel().getColumn(0).setResizable(false);
-        tableModel = (DefaultTableModel) table.getModel();
-        scrollPane.setViewportView(table);
+        lblNRespondidas = new JLabel("N\u00BA RESPONDIDAS: " + his.getPerguntasRespondidas());
+        lblNRespondidas.setBounds(10, 61, 305, 14);
+        panel.add(lblNRespondidas);
 
-        btnAtualizar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        lblUsuario = new JLabel("USUARIO: " + u.getNick());
+        lblUsuario.setBounds(10, 11, 305, 14);
+        panel.add(lblUsuario);
 
-            }
-        });
-        btnAtualizar.setBounds(579, 404, 114, 23);
-
-        contentPanel.add(btnAtualizar);
+        lblAcertos = new JLabel("APROVEITAMENTO(%):  " + (his.getPerguntasCertas() * 100) / his.getPerguntasRespondidas() + "%");
+        lblAcertos.setBounds(10, 86, 305, 14);
+        panel.add(lblAcertos);
 
         setVisible(true);
-
     }
-
-//    private void ListarHistorico() {
-//        List<HistoricoJogador> historico = new Facade().buscarHistorico("");
-//        for (HistoricoJogador histJ : historico) {
-//            tableModel.addRowSelectionInterval(new Object[]{histJ.getPerguntasRespondidas(), histJ.getPerguntasCertas()});
-//        }
-//    }
 }

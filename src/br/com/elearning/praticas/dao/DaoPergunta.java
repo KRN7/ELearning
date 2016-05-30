@@ -84,7 +84,7 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
                     p.setId(rs.getInt("id"));
                     p.setQuestao(rs.getString("questao"));
                     p.setNivel(rs.getString("nivel"));
-                    Area area = new DaoArea().buscarArea(rs.getInt("id_area"));
+                    Area area = new Facade().buscarArea(rs.getInt("id_area"));
                     p.setArea(area);
                     p.setStatus(rs.getBoolean("status"));
                     this.fecharConexao();
@@ -110,7 +110,7 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
                     p.setId(rs.getInt("id"));
                     p.setQuestao(rs.getString("questao"));
                     p.setNivel(rs.getString("nivel"));
-                    Area area = new DaoArea().buscarArea(rs.getInt("id_area"));
+                    Area area = new Facade().buscarArea(rs.getInt("id_area"));
                     p.setArea(area);
                     p.setStatus(rs.getBoolean("status"));
                     this.fecharConexao();

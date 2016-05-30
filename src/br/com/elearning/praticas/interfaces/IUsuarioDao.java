@@ -24,7 +24,7 @@ public interface IUsuarioDao {
 
     public Usuario buscarUsuario(long id) throws Exception;
 
-    public Usuario buscarUsuarioSenha(String senha) throws Exception;
+    public Usuario buscarUsuarioUsername(String username) throws Exception;
 
     public Usuario buscarUsuarioEmail(String email) throws Exception;
 

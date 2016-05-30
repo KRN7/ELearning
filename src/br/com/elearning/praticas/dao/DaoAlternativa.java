@@ -9,7 +9,6 @@ import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Pergunta;
 import br.com.elearning.praticas.model.Alternativa;
 import br.com.elearning.praticas.interfaces.IAlternativaDao;
-import br.com.elearning.praticas.model.Area;
 import br.com.elearning.praticas.util.PropertiesUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -95,7 +94,7 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
                 alternativa.setAlt4(rs.getString("alt4"));
                 alternativa.setAlt5(rs.getString("alt5"));
                 alternativa.setAltCorreta(rs.getString("altcorreta"));
-                Pergunta p = new DaoPergunta().buscarPergunta(rs.getInt("id_pergunta"));
+                Pergunta p = new Facade().buscarPergunta(rs.getInt("id_pergunta"));
                 alternativa.setPergunta(p);
                 alternativas.add(alternativa);
             }
@@ -127,21 +126,5 @@ public class DaoAlternativa extends DaoGeneric implements IAlternativaDao {
             throw new RuntimeException(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_UPDATE));
         }
     }
-
-//    public void removerAlternativa(Alternativa a) throws Exception {
-//        String sql = "DELETE FROM pergunta p where p.id = ?";
-//        try {
-//            PreparedStatement pst = this.getConexao().prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery();
-//            if (rs.getLong("id") == p.getId()) {
-//                pst.setLong(1, p.getId());
-//                pst.executeUpdate();
-//                this.getConexao().commit();
-//                this.fecharConexao();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new Exception(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_DELETE));
-//        }
-//    }
+    
 }

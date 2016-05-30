@@ -30,35 +30,25 @@ public class DialogEditarUser extends JDialog {
     private JTextField tfNome;
     private JTextField tfUsername;
     private JPasswordField tfSenha;
-    private JTextField tfEmail;
     private JPanel panel;
     private JLabel lblNome;
     private JLabel lblUsername;
     private JLabel lblSenha;
-    private JLabel lblEmail;
     private JButton btnEditar;
     private Facade facade;
     public static final String TIPO = "J";
     private JPanel panelLogin;
-    private JLabel lblSenha_1;
-    private JPasswordField pfSenha;
+    private JLabel lblSenhaV;
+    private JPasswordField tfSenhaV;
+    private JTextField tfUsernameV;
+    private JLabel lblUsernameV;
     private Usuario user = null;
 
     /**
-     * Launch the application.
-     */
-    /**
-     *
-     * @param args - Array de String
-     */
-    public static void main(String[] args) {
-        new DialogEditarUser();
-    }
-
-    /**
      * Create the dialog.
+     * @param us - Usuario a ser editado.
      */
-    public DialogEditarUser() {
+    public DialogEditarUser(Usuario us) {
         setSize(335, 257);
         setTitle("EDITAR USUARIO");
         setResizable(false);
@@ -116,25 +106,40 @@ public class DialogEditarUser extends JDialog {
         contentPanel.add(panelLogin);
         panelLogin.setLayout(null);
 
-        lblSenha_1 = new JLabel("SENHA:");
-        lblSenha_1.setBounds(16, 66, 46, 14);
-        panelLogin.add(lblSenha_1);
+        lblSenhaV = new JLabel("SENHA:");
+        lblSenhaV.setBounds(16, 66, 46, 14);
+        panelLogin.add(lblSenhaV);
 
-        pfSenha = new JPasswordField();
-        pfSenha.setBounds(60, 63, 181, 20);
-        panelLogin.add(pfSenha);
+        tfSenhaV = new JPasswordField();
+        tfSenhaV.setBounds(84, 63, 157, 20);
+        panelLogin.add(tfSenhaV);
+
+        lblUsernameV = new JLabel("USERNAME:");
+        lblUsernameV.setBounds(16, 35, 58, 14);
+        panelLogin.add(lblUsernameV);
+
+        tfUsernameV = new JTextField();
+        tfUsernameV.setBounds(84, 32, 157, 20);
+        panelLogin.add(tfUsernameV);
+        tfUsernameV.setColumns(10);
 
         btnEditar = new JButton("ENTRAR");
         btnEditar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String senhaMd5 = Criptografia.md5(String.valueOf(pfSenha.getPassword()));
+                    String senhaMd5 = Criptografia.md5(String.valueOf(tfSenhaV.getPassword()));
                     if (btnEditar.getText().equals("ENTRAR")) {
-                        user = facade.buscarUsuarioSenha(senhaMd5);
-                        btnEditar.setText("EDITAR");
-                        panelLogin.setVisible(false);
-                        panel.setVisible(true);
-                        return;
+                        user = facade.buscarUsuarioLogin(tfUsernameV.getText(), senhaMd5);
+                        if (user != null) {
+                            if (user.getNick().equals(us.getNick())) {
+                                setTitle("EDITAR USUARIO - " + user.getNick());
+                                btnEditar.setText("EDITAR");
+                                panelLogin.setVisible(false);
+                                panel.setVisible(true);
+                                return;
+                            }
+                        }
+                        JOptionPane.showMessageDialog(DialogEditarUser.this, "USERNAME OU SENHA INVALIDOS!", "ERROR", JOptionPane.WARNING_MESSAGE);
                     }
                     if (btnEditar.getText().equals("EDITAR")) {
                         String newSenha = Criptografia.md5(String.valueOf(tfSenha.getPassword()));

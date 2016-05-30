@@ -64,6 +64,7 @@ public class MainFrame extends JFrame {
     private JMenuItem mntmContato;
     private Facade facade;
     private static LoadingScreen loadScreen;
+    private Usuario user;
 
     /**
      * Launch the application.
@@ -142,7 +143,7 @@ public class MainFrame extends JFrame {
         mntmEditarConta = new JMenuItem("EDITAR CONTA");
         mntmEditarConta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new DialogEditarUser();
+                new DialogEditarUser(user);
             }
         });
         mnNomeUser.add(mntmEditarConta);
@@ -210,7 +211,7 @@ public class MainFrame extends JFrame {
         btnEntrar = new JButton("ENTRAR");
         btnEntrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Usuario user = null;
+                user = null;
                 String senhaMd5 = Criptografia.md5(String.valueOf(tfSenha.getPassword()));
 
                 try {
@@ -306,7 +307,7 @@ public class MainFrame extends JFrame {
 
     public void filtrarSegundoItem() {
         if (mntmVisualizarHistorico.getText().equals("VISUALIZAR HISTORICO")) {
-            new DialogHistorico();
+            new DialogHistorico(user);
             //JOptionPane.showMessageDialog(MainFrame.this, "VISUALIZAR APENAS O HISTORICO DO JOGADOR AKI");
         }
         if (mntmVisualizarHistorico.getText().equals("VISUALIZAR JOGADORES")) {

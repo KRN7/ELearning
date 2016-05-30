@@ -100,13 +100,13 @@ public class Facade implements Serializable {
      * parametro.Método apenas usado para verificar usuario antes de editar.
      *
      * @author RicksonEllen
-     * @param senha - Senha do Usuario.
+     * @param username - Senha do Usuario.
      * @return Usuario - Retorna um usuario, caso ele tenha a mesma senha que
      * foi passada por parametro.
      * @throws Exception - Caso lance Exception.
      */
-    public Usuario buscarUsuarioSenha(String senha) throws Exception {
-        return this.daoUsuario.buscarUsuarioSenha(senha);
+    public Usuario buscarUsuarioUsername(String username) throws Exception {
+        return this.daoUsuario.buscarUsuarioUsername(username);
     }
 
     /**
@@ -214,7 +214,9 @@ public class Facade implements Serializable {
         return this.daoPergunta.buscarPergunta(id);
     }
 
-    /**Método edita uma Pergunta.
+    /**
+     * Método edita uma Pergunta.
+     *
      * @author Sidney
      * @param p - Pergunta a ser editada.
      * @throws Exception - Caso lance Exception.
@@ -340,7 +342,8 @@ public class Facade implements Serializable {
 
     /**
      * Método edita um Pergunta
-     *@author Felipe
+     *
+     * @author Felipe
      * @param a - Alternativa a ser editada.
      * @throws Exception - Caso lance Exception.
      */
@@ -379,6 +382,16 @@ public class Facade implements Serializable {
      */
     public void salvarHistorico(HistoricoJogador h, Pergunta p, Usuario u) throws Exception {
         this.daoHistoricoJogador.salvarHistoricoJogador(h, p, u);
+    }
+
+    /**
+     * @author Sidney
+     * @param id - Id do Usuario(Jogador).
+     * @return - Retorna um HistoricoJogador.
+     * @throws Exception - Caso lance Exception.
+     */
+    public HistoricoJogador buscarHistorico(long id) throws Exception {
+        return this.daoHistoricoJogador.buscarHistorico(id);
     }
 
     //METODOS DO DAO SIMULADO

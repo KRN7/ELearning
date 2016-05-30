@@ -112,14 +112,14 @@ public class DaoUsuario extends DaoGeneric implements IUsuarioDao {
     }
 
     @Override
-    public Usuario buscarUsuarioSenha(String senha) throws Exception {
+    public Usuario buscarUsuarioUsername(String username) throws Exception {
         String sql = "select * from usuario";
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                if (rs.getString("senha").equals(senha)) {
+                if (rs.getString("nick").equals(username)) {
                     Usuario user = new Usuario();
                     user.setId(rs.getInt("iduser"));
                     user.setNome(rs.getString("nome"));

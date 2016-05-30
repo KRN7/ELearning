@@ -46,20 +46,24 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
     @Override
     public HistoricoJogador buscarHistorico(long id) throws Exception {
         String sql = "select * from historicoJogador";
-//        Usuario user = facade.buscarUsuarioID(id);
-//        Pergunta p = facade.buscarPergunta(id);
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
-            if (rs.getLong("id") == id) {
-                HistoricoJogador hisJog = new HistoricoJogador();
-                hisJog.setId(rs.getLong("id"));
-                hisJog.setPerguntasCertas(rs.getInt("perguntascertas"));
-                hisJog.setPerguntasRespondidas(rs.getInt("perguntasrespondidas"));
-                this.getConexao().commit();
-                this.fecharConexao();
-                return hisJog;
+            while (rs.next()) {
+                if (rs.getLong("id_usuario") == id) {
+                    HistoricoJogador hisJog = new HistoricoJogador();
+                    hisJog.setId(rs.getLong("id"));
+                    hisJog.setPerguntasCertas(rs.getInt("qntcertas"));
+                    hisJog.setPerguntasRespondidas(rs.getInt("qntrespondidas"));
+                    Usuario u = new Facade().buscarUsuarioId(rs.getLong("id_usuario"));
+                    hisJog.setUsuario(u);
+                    Pergunta p = new Facade().buscarPergunta(rs.getLong("id_pergunta"));
+                    hisJog.setPergunta(p);
+                    this.getConexao().commit();
+                    this.fecharConexao();
+                    return hisJog;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
