@@ -21,17 +21,15 @@ import java.util.logging.*;
  */
 public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
 
-//    private Facade facade = new Facade();
     @Override
     public void salvarHistoricoJogador(HistoricoJogador h, Pergunta p, Usuario u) throws Exception {
-        String sql = "insert into historicoJogador (qntcertas, qntrespondidas, id_usuario, id_pergunta) values(?, ?, ?, ?)";
+        String sql = "insert into historicoJogador (qntcertas, qntrespondidas, id_usuario) values(?, ?, ?)";
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
             pst.setLong(1, h.getPerguntasCertas());
             pst.setLong(2, h.getPerguntasRespondidas());
             pst.setLong(3, u.getId());
-            pst.setLong(4, p.getId());
             pst.executeUpdate();
             this.getConexao().commit();
             this.fecharConexao();
@@ -58,8 +56,6 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
                     hisJog.setPerguntasRespondidas(rs.getInt("qntrespondidas"));
                     Usuario u = new Facade().buscarUsuarioId(rs.getLong("id_usuario"));
                     hisJog.setUsuario(u);
-                    Pergunta p = new Facade().buscarPergunta(rs.getLong("id_pergunta"));
-                    hisJog.setPergunta(p);
                     this.getConexao().commit();
                     this.fecharConexao();
                     return hisJog;
@@ -75,16 +71,13 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
     }
 
     @Override
-    public void editarHistorico(Usuario u, Pergunta p, HistoricoJogador h) throws Exception {
-        String sql = "UPDATE historicojogador SET perguntascertas = ?, perguntasrespondidas = ? where id_pergunta = " + p.getId() + "";
-
-        long id_pergunta = salvarPergunta(p, h);
-
+    public void editarHistorico(Usuario u, HistoricoJogador h) throws Exception {
+        String sql = "UPDATE historicojogador SET qntcertas = ?, qntrespondidas = ? where id_usuario = " + u.getId();
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
-            pst.setInt(1, h.getPerguntasCertas() + 1);
-            pst.setInt(2, h.getPerguntasRespondidas() + 1);
-            pst.setLong(3, h.getId());
+            pst.setInt(1, h.getPerguntasCertas());
+            pst.setInt(2, h.getPerguntasRespondidas());
+            pst.executeUpdate();
             this.getConexao().commit();
             this.fecharConexao();
         } catch (SQLException e) {
@@ -94,13 +87,13 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
     }
 
     @Override
-    public void editarHistoricoPerguntasRespondidas(Usuario u, Pergunta p, HistoricoJogador h) throws Exception {
-        String sql = "UPDATE historicojogador SET perguntasrespondidas = ? where id_pergunta = " + p.getId();
+    public void editarHistoricoPerguntasRespondidas(Usuario u, HistoricoJogador h) throws Exception {
+        String sql = "UPDATE historicojogador SET qntrespondidas = ? where id_usuario = " + u.getId();
 
         try {
             PreparedStatement pst = this.getConexao().prepareStatement(sql);
-            pst.setInt(1, h.getPerguntasRespondidas() + 1);
-            pst.setLong(2, h.getId());
+            pst.setInt(1, h.getPerguntasRespondidas());
+            pst.executeUpdate();
             this.getConexao().commit();
             this.fecharConexao();
         } catch (SQLException e) {
@@ -110,6 +103,7 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
 
     }
 
+    @Override
     public List<HistoricoJogador> listarHistoricos() throws Exception {
         List<HistoricoJogador> his = new ArrayList<>();
         String sql = "select * from historicojogador";
@@ -123,8 +117,6 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
                 h.setPerguntasRespondidas(rs.getInt("qntrespondidas"));
                 Usuario u = new Facade().buscarUsuarioId(rs.getInt("id_usuario"));
                 h.setUsuario(u);
-                Pergunta p = new Facade().buscarPergunta(rs.getInt("id_pergunta"));
-                h.setPergunta(p);
                 his.add(h);
             }
             this.fecharConexao();
@@ -136,6 +128,7 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
         return his;
     }
 
+    @Override
     public long salvarPergunta(Pergunta p, HistoricoJogador h) throws Exception {
         String sql = "insert into perguntahistorico (id_historico, id_historico) values (?, ?);";
         try {
@@ -151,5 +144,4 @@ public class DaoHistorico extends DaoGeneric implements IHistoricoJogadorDao {
         }
         return p.getId();
     }
-
 }

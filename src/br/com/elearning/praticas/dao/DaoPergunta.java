@@ -5,6 +5,7 @@
  */
 package br.com.elearning.praticas.dao;
 
+import br.com.elearning.praticas.dialog.DialogSimulado;
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.interfaces.IPerguntaDao;
 import br.com.elearning.praticas.model.Area;
@@ -17,8 +18,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -185,5 +188,38 @@ public class DaoPergunta extends DaoGeneric implements IPerguntaDao {
                     null, e);
             throw new RuntimeException(PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_UPDATE));
         }
+    }
+
+    @Override
+    public List<Pergunta> buscarPerguntasSimulado(String nivel, Area a, int quant) throws Exception {
+        List<Pergunta> newPergs = new ArrayList<>();
+        List<Pergunta> listaTemp = new ArrayList<>();
+        List<Pergunta> pergs = listarPergunta();
+        for (Pergunta p : pergs) {
+            if (p.getNivel().equals(nivel) && p.getArea().getAreaNome().equals(a.getAreaNome())) {
+                newPergs.add(p);
+            }
+        }
+        Random random = new Random();
+        int cont = 0;
+        if (!newPergs.isEmpty()) {
+            if (quant > newPergs.size()) {
+                JOptionPane.showMessageDialog(null, "NAO EXISTE ESSE NUMERO DE PERGUNTNAS NESSE NIVEL E AREA!", "ATENÇAO", JOptionPane.WARNING_MESSAGE);
+            }
+            if (quant <= newPergs.size()) {
+                do {
+                    if (cont == quant) {
+                        break;
+                    }
+                    int n = random.nextInt(newPergs.size());
+                    listaTemp.add(newPergs.get(n));
+                    cont++;
+                    newPergs.remove(n);
+                } while (true);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "NAO EXISTE PERGUNTA NESSE NIVEL OU AREA!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return listaTemp;
     }
 }

@@ -5,7 +5,7 @@
  */
 package br.com.elearning.praticas.interfaces;
 
-import br.com.elearning.praticas.model.Pergunta;
+import br.com.elearning.praticas.model.*;
 import java.util.List;
 
 /**
@@ -27,5 +27,7 @@ public interface IPerguntaDao {
     public List<Pergunta> listarPergunta() throws Exception;
 
     public void removerPergunta(Pergunta p) throws Exception;
+    
+    public List<Pergunta> buscarPerguntasSimulado(String nivel, Area a, int quant) throws Exception;
 
 }

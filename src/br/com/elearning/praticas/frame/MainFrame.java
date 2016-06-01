@@ -7,6 +7,7 @@ import br.com.elearning.praticas.dialog.DialogEditarUser;
 import br.com.elearning.praticas.dialog.DialogGerenciarPergunta;
 import br.com.elearning.praticas.dialog.DialogHistorico;
 import br.com.elearning.praticas.dialog.DialogSimulado;
+import br.com.elearning.praticas.dialog.DialogVisualizarJogadores;
 import br.com.elearning.praticas.facade.Facade;
 import br.com.elearning.praticas.model.Usuario;
 import br.com.elearning.praticas.util.Criptografia;
@@ -70,7 +71,7 @@ public class MainFrame extends JFrame {
      * Launch the application.
      */
     /**
-     * 
+     *
      * @param args - Array de String.
      */
     public static void main(String[] args) {
@@ -297,21 +298,19 @@ public class MainFrame extends JFrame {
 
     public void filtrarPrimeiroItem() {
         if (mntmIniciarSimulado.getText().equals("GERENCIAR PERGUNTA")) {
-                new DialogGerenciarPergunta();
+            new DialogGerenciarPergunta();
         }
         if (mntmIniciarSimulado.getText().equals("NOVO SIMULADO")) {
-                new DialogSimulado();
-            //JOptionPane.showMessageDialog(MainFrame.this, "DIALOG DE NOVO SIMULADO AKI");
+            new DialogSimulado(user);
         }
     }
 
     public void filtrarSegundoItem() {
         if (mntmVisualizarHistorico.getText().equals("VISUALIZAR HISTORICO")) {
             new DialogHistorico(user);
-            //JOptionPane.showMessageDialog(MainFrame.this, "VISUALIZAR APENAS O HISTORICO DO JOGADOR AKI");
         }
         if (mntmVisualizarHistorico.getText().equals("VISUALIZAR JOGADORES")) {
-            JOptionPane.showMessageDialog(MainFrame.this, "VISUALIZAR JOGADORES AKI");
+            new DialogVisualizarJogadores();
         }
     }
 }

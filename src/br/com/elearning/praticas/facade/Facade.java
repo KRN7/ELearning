@@ -247,6 +247,18 @@ public class Facade implements Serializable {
         this.daoPergunta.removerPergunta(p);
     }
 
+    /**
+     * @author Felipe
+     * @param nivel - Nivel a ser filtrado.
+     * @param a - Area a ser filtrada.
+     * @param quant - Quantidade de perguntas desejadas pelo usuario.
+     * @return - Restorna a lista de Perguntas filtradas pelos parametros.
+     * @throws Exception - Caso lance Exception.
+     */
+    public List<Pergunta> buscarPerguntasSimulado(String nivel, Area a, int quant) throws Exception {
+        return this.daoPergunta.buscarPerguntasSimulado(nivel, a, quant);
+    }
+
     //METODOS DO DAO AREA
     /**
      * Método salva uma area.
@@ -385,6 +397,8 @@ public class Facade implements Serializable {
     }
 
     /**
+     * Método busca um HistoricoJogador pelo id passado por parametro.
+     *
      * @author Sidney
      * @param id - Id do Usuario(Jogador).
      * @return - Retorna um HistoricoJogador.
@@ -392,6 +406,41 @@ public class Facade implements Serializable {
      */
     public HistoricoJogador buscarHistorico(long id) throws Exception {
         return this.daoHistoricoJogador.buscarHistorico(id);
+    }
+
+    /**
+     * Método lista todos os HistoricoJogador.
+     *
+     * @author Felipe
+     * @return - Retorna uma lista de HistoricoJogador.
+     * @throws Exception - Caso lance alguma.
+     */
+    public List<HistoricoJogador> listarHistoricoJogador() throws Exception {
+        return this.daoHistoricoJogador.listarHistoricos();
+    }
+
+    /**
+     * Método edita um HistoricoJogador(apenas quando a resposta esta certa).
+     *
+     * @author Sidney
+     * @param his - HistoricoJogador a ser editado.
+     * @param u - Jogador.
+     * @throws Exception
+     */
+    public void editarHistorico(HistoricoJogador his, Usuario u) throws Exception {
+        this.daoHistoricoJogador.editarHistorico(u, his);
+    }
+
+    /**
+     * Método edita um HistoricoJogador.
+     *
+     * @author Sidney
+     * @param his - HistoricoJogador a ser editado.
+     * @param u - Jogador.
+     * @throws Exception
+     */
+    public void editarHistoricoRespondidas(HistoricoJogador his, Usuario u) throws Exception {
+        this.daoHistoricoJogador.editarHistoricoPerguntasRespondidas(u, his);
     }
 
     //METODOS DO DAO SIMULADO

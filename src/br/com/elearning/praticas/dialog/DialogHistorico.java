@@ -56,7 +56,7 @@ public class DialogHistorico extends JDialog {
         contentPanel.setLayout(null);
 
         try {
-            this.his = new Facade().buscarHistorico(7);
+            this.his = new Facade().buscarHistorico(u.getId());
         } catch (Exception ex) {
             Logger.getLogger(DialogHistorico.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,10 +81,19 @@ public class DialogHistorico extends JDialog {
         lblUsuario.setBounds(10, 11, 305, 14);
         panel.add(lblUsuario);
 
-        lblAcertos = new JLabel("APROVEITAMENTO(%):  " + (his.getPerguntasCertas() * 100) / his.getPerguntasRespondidas() + "%");
+        lblAcertos = new JLabel();
+        verificarRespostas();
         lblAcertos.setBounds(10, 86, 305, 14);
         panel.add(lblAcertos);
 
         setVisible(true);
+    }
+
+    private void verificarRespostas() {
+        if (his.getPerguntasRespondidas() == 0) {
+            lblAcertos.setText("APROVEITAMENTO(%): 0%");
+        } else {
+            lblAcertos.setText("APROVEITAMENTO(%):  " + (his.getPerguntasCertas() * 100) / his.getPerguntasRespondidas() + "%");
+        }
     }
 }

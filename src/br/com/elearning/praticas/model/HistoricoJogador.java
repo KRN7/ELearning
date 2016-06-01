@@ -15,7 +15,6 @@ public class HistoricoJogador {
 
     private long id;
     private Usuario usuario;
-    private Pergunta pergunta;
     private int perguntasRespondidas;
     private int perguntasCertas;
 
@@ -44,14 +43,6 @@ public class HistoricoJogador {
         this.usuario = usuario;
     }
 
-    public Pergunta getPergunta() {
-        return pergunta;
-    }
-
-    public void setPergunta(Pergunta pergunta) {
-        this.pergunta = pergunta;
-    }
-
     public int getPerguntasRespondidas() {
         return perguntasRespondidas;
     }
@@ -70,7 +61,7 @@ public class HistoricoJogador {
 
     @Override
     public String toString() {
-        return "jogador: { nome: "+usuario.getNome() + ", perguntas=" + perguntasRespondidas + ", PerguntasCertas=" + perguntasCertas + '}';
+        return "jogador: { nome: " + usuario.getNome() + ", perguntas=" + perguntasRespondidas + ", PerguntasCertas=" + perguntasCertas + '}';
     }
 
 }

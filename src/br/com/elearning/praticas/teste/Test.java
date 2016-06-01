@@ -1,6 +1,9 @@
 package br.com.elearning.praticas.teste;
 
+import br.com.elearning.praticas.dao.DaoPergunta;
 import br.com.elearning.praticas.facade.Facade;
+import br.com.elearning.praticas.model.Area;
+import br.com.elearning.praticas.model.Pergunta;
 import br.com.elearning.praticas.model.SimuladoUsuario;
 import br.com.elearning.praticas.util.*;
 import java.util.List;
@@ -33,6 +36,10 @@ public class Test {
                 System.out.println("conexao falhou\n");
                 facade = new Facade();
             }
+            
+            Area a = facade.buscarArea("Geral");
+            List<Pergunta> pergs = facade.buscarPerguntasSimulado("FACIL", a, 2);
+            System.out.println(pergs);
 
         } catch (Exception ex) {
             ex.printStackTrace();

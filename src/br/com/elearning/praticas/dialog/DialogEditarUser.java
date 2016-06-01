@@ -46,6 +46,7 @@ public class DialogEditarUser extends JDialog {
 
     /**
      * Create the dialog.
+     *
      * @param us - Usuario a ser editado.
      */
     public DialogEditarUser(Usuario us) {

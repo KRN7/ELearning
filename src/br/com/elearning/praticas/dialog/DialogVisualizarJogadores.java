@@ -15,7 +15,9 @@ import br.com.elearning.praticas.model.Usuario;
 import br.com.elearning.praticas.util.PropertiesUtils;
 import br.com.elearning.praticas.util.ReportsFactory;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -30,10 +32,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.border.TitledBorder;
 
 public class DialogVisualizarJogadores extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
+    private JPanel panel;
     private JTable table;
     private JScrollPane scrollPane;
     private JButton btnGerarListaDe;
@@ -49,63 +53,72 @@ public class DialogVisualizarJogadores extends JDialog {
         setResizable(false);
         setLocationRelativeTo(null);
         setModal(true);
+        setTitle("VISUALIZAR JOGADORES");
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src\\res\\miniLogo.png"));
         getContentPane().setLayout(new BorderLayout());
+        contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
+
+        panel = new JPanel();
+        panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+                TitledBorder.TOP, null, null));
+        panel.setBackground(Color.WHITE);
+        panel.setBounds(10, 11, 820, 436);
+        contentPanel.add(panel);
+        panel.setLayout(null);
         facade = new Facade();
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 23, 632, 391);
-        contentPanel.add(scrollPane);
+        scrollPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+                TitledBorder.TOP, null, null));
+        scrollPane.setBounds(10, 11, 619, 414);
+        panel.add(scrollPane);
 
         table = new JTable();
 
-        table.setModel(new DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "JOGADORES", "E-MAIL"
-                }
-        ));
+        table.setModel(new DefaultTableModel(new Object[][]{}, new String[]{
+            "JOGADORES", "E-MAIL"}));
         tableModel = (DefaultTableModel) table.getModel();
         table.setModel(tableModel);
         scrollPane.setViewportView(table);
 
+        btnGerarClassificao = new JButton("GERAR CLASSIFICA\u00C7\u00C3O");
+        btnGerarClassificao.setBounds(649, 45, 156, 23);
+        panel.add(btnGerarClassificao);
+
         btnGerarListaDe = new JButton("GERAR LISTA DE USUARIOS");
+        btnGerarListaDe.setBounds(641, 11, 169, 23);
+        panel.add(btnGerarListaDe);
         btnGerarListaDe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     new ReportsFactory().reportUser();
                 } catch (Exception ex) {
-                    Logger.getLogger(DialogVisualizarJogadores.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DialogVisualizarJogadores.class.getName()).log(Level.SEVERE,
+                            null, ex);
                 }
             }
         });
-        btnGerarListaDe.setBounds(652, 37, 168, 50);
-        contentPanel.add(btnGerarListaDe);
-
-        btnGerarClassificao = new JButton("GERAR CLASSIFICA\u00C7\u00C3O");
         btnGerarClassificao.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     new ReportsFactory().reportClassificacao();
                 } catch (Exception ex) {
-                    Logger.getLogger(DialogVisualizarJogadores.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DialogVisualizarJogadores.class.getName()).log(Level.SEVERE,
+                            null, ex);
                 }
             }
         });
-        btnGerarClassificao.setBounds(652, 123, 168, 50);
-        contentPanel.add(btnGerarClassificao);
 
         montarTable();
         setVisible(true);
     }
 
     private void montarTable() {
-
         try {
-            List<Usuario> lista;
-            lista = facade.listarUsuario();
+            List<Usuario> lista = facade.listarUsuario();
             for (Usuario u : lista) {
                 if (u.getTipo().equalsIgnoreCase("J")) {
                     tableModel.addRow(new Object[]{u.getNome(), u.getEmail()});
@@ -115,7 +128,6 @@ public class DialogVisualizarJogadores extends JDialog {
             Logger.getLogger(DialogGerenciarPergunta.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(DialogVisualizarJogadores.this, PropertiesUtils.getMsgValue(PropertiesUtils.MSG_ERRO_MONTAR_TABELA));
         }
-
     }
 
     private void limparTable() {

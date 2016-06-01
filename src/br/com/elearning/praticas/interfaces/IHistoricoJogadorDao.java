@@ -8,6 +8,7 @@ package br.com.elearning.praticas.interfaces;
 import br.com.elearning.praticas.model.HistoricoJogador;
 import br.com.elearning.praticas.model.Pergunta;
 import br.com.elearning.praticas.model.Usuario;
+import java.util.List;
 
 /**
  *
@@ -19,10 +20,11 @@ public interface IHistoricoJogadorDao {
 
     public HistoricoJogador buscarHistorico(long id) throws Exception;
 
-    public void editarHistorico(Usuario u, Pergunta p, HistoricoJogador h) throws Exception;
+    public void editarHistorico(Usuario u, HistoricoJogador h) throws Exception;
 
-    public void editarHistoricoPerguntasRespondidas(Usuario u, Pergunta p, HistoricoJogador h) throws Exception;
+    public void editarHistoricoPerguntasRespondidas(Usuario u, HistoricoJogador h) throws Exception;
+
+    public List<HistoricoJogador> listarHistoricos() throws Exception;
 
     public long salvarPergunta(Pergunta p, HistoricoJogador h) throws Exception;
-
 }
